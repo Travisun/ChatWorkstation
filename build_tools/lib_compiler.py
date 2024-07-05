@@ -67,7 +67,7 @@ def custom_compile_dir(dir_path, base_dir, output_dir, logger):
             else:
                 src_file_path = os.path.join(root, file)
                 rel_path = os.path.relpath(src_file_path, base_dir)
-                dest_file_path = os.path.join(output_dir, rel_path)
+                dest_file_path = os.path.join(output_dir, rel_path).replace(os.path.join("Lib", "site-packages"), "")
                 dest_dir = os.path.dirname(dest_file_path)
                 if not os.path.exists(dest_dir):
                     os.makedirs(dest_dir)
@@ -126,7 +126,7 @@ if __name__ == "__main__":
 
     script_path = os.path.dirname(os.path.abspath(__file__))
     # 定义模块输出路径
-    output_dir = os.path.join(script_path, "../", "dist", "chatopt_backend", "_internal")
+    output_dir = os.path.join(script_path, "../", "dist", "Backend", "_internal")
     print("LIB_OUT_DIR", output_dir)
 
     logger = setup_logging()

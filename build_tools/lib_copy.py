@@ -55,7 +55,7 @@ if __name__ == "__main__":
     filenames = file_copies
 
     script_path = os.path.dirname(os.path.abspath(__file__))
-    target_folder = os.path.join(script_path, "../", "dist", "chatopt_backend", "_internal")
+    target_folder = os.path.join(script_path, "../", "dist", "Backend", "_internal")
     search_paths = os.environ['PATH'].split(os.pathsep) + [os.getcwd()]
 
     main(filenames, target_folder, search_paths)

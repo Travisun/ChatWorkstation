@@ -11,7 +11,7 @@
     "backend:test": "",
     "backend:run": "cross-env-shell dist/ChatOPT_Libs/chat_options.exe",
     "pyodide:fetch": "cd third_party/open_webui && node scripts/prepare-pyodide.js",
-    "backend:compilelibs": "python build_tools/lib_compiler.py"
+    "backend:compilelibs": "python build_tools/lib_compiler.py && python build_tools/lib_copy.py"
   },
   "keywords": [
     "ChatGPT",

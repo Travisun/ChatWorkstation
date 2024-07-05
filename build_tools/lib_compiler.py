@@ -5,6 +5,8 @@ import shutil
 import importlib.util
 import pkgutil
 import logging
+import warnings
+
 from colorama import init, Fore, Style
 from pathlib import Path
 
@@ -115,12 +117,17 @@ def compile_module(module_name, output_dir, logger):
             logger.warning(f"{Fore.YELLOW}Error importing module: {submodule_full_name}. Skipping... {e}")
 
 if __name__ == "__main__":
-    if len(sys.argv) != 3:
-        print(f"{Fore.RED}Usage: python compile_script.py <module_names_comma_separated> <output_dir>")
-        sys.exit(1)
+    # if len(sys.argv) != 3:
+    #     print(f"{Fore.RED}Usage: python compile_script.py <module_names_comma_separated> <output_dir>")
+    #     sys.exit(1)
 
-    module_names = sys.argv[1].split(',')
-    output_dir = sys.argv[2]
+    from additional_files import additional_libs
+    module_names = additional_libs
+
+    script_path = os.path.dirname(os.path.abspath(__file__))
+    # 定义模块输出路径
+    output_dir = os.path.join(script_path, "../", "dist", "chatopt_backend", "_internal")
+    print("LIB_OUT_DIR", output_dir)
 
     logger = setup_logging()
 

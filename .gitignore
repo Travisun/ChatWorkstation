@@ -7,3 +7,7 @@ node_modules
 node_modules/*
 third_party
 third_party/*
+build_tools/__pycache__
+build_tools/__pycache__/*
+dist
+dist/*

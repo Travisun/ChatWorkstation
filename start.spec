@@ -5,9 +5,10 @@ block_cipher = None
 
 a = Analysis(
     ['start.py'],
-    pathex=['.'],
+    pathex=['.','third_party/open_webui/backend'],
     binaries=[],
     datas=[],
+    name='Backend',
     hiddenimports=["black","hnswlib","chromadb","pypika","backoff","posthog","passlib","scipy","transformers","pathspec","blib2to3"],
     hookspath=["build_tools/hooks"],
     runtime_hooks=[],
@@ -22,7 +23,7 @@ exe = EXE(
     a.scripts,
     [],
     exclude_binaries=True,
-    name='chat_options',
+    name='Backend',
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,
@@ -37,5 +38,10 @@ coll = COLLECT(
     strip=False,
     upx=True,
     upx_exclude=[],
-    name='ChatOPT_Libs',
+    name='Backend',
+    distpath='build_temp',
+    workpath='dist',  # 修改为临时工作目录
+    console=True,
+    upx_dir='build_tools/upx'  # Windows 上 UPX 可执行文件的路径
+    # upx_dir='/usr/local/bin/upx'  # Unix 系统上 UPX 可执行文件的路径
 )

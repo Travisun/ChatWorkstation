@@ -5,11 +5,13 @@
   "main": "src/main.js",
   "scripts": {
     "start": "electron ./src/main.js",
-    "postinstall": "cd third_party/open_webui && npm install",
-    "ui:build": "cd third_party/open_webui && npm run pyodide:fetch && cross-env VITE_OUT_DIR=../build/ui vite build --config ../../vite.config.js",
-    "backend:build": "",
+    "postinstall": "cd third_party/open_webui && yarn",
+    "ui:build": "npm run pyodide:fetch && cross-env VITE_OUT_DIR=../build/ui vite build --config ./vite.config.js --emptyOutDir",
+    "backend:build": "pyinstaller start.spec",
     "backend:test": "",
-    "pyodide:fetch": "node third_party/open_webui/scripts/prepare-pyodide.js"
+    "backend:run": "cross-env-shell dist/ChatOPT_Libs/chat_options.exe",
+    "pyodide:fetch": "cd third_party/open_webui && node scripts/prepare-pyodide.js",
+    "backend:compilelibs": "python build_tools/lib_compiler.py"
   },
   "keywords": [
     "ChatGPT",
@@ -22,10 +24,12 @@
   "author": "Travis Tang",
   "license": "ISC",
   "devDependencies": {
+    "cross-env": "^7.0.3",
+    "cross-env-shell": "^7.0.3",
     "electron": "^31.1.0"
   },
   "dependencies": {
-    "cross-env": "^7.0.3",
+    "pyodide": "^0.26.1",
     "tree-kill": "^1.2.2",
     "vite": "^5.3.3"
   }

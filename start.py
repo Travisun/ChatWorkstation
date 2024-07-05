@@ -10,9 +10,14 @@ from importlib.util import find_spec
 base_script_path = os.path.dirname(os.path.abspath(__file__))
 # 开发时的库目录
 backend_path = os.path.join(base_script_path, "third_party", "open_webui", "backend")
+# 编译后的目录
+runtime_path = os.path.join(base_script_path, "_internal")
 # 添加额外目录到 Path
 sys.path.append(base_script_path)
 sys.path.append(backend_path)
+sys.path.append(runtime_path)
+
+print("Path: {}".format(sys.path))
 
 def generate_secret_key(length=12):
     return ''.join(str(random.randint(0, 9)) for _ in range(length))

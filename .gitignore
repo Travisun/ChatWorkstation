@@ -1,0 +1,9 @@
+.venv
+.venv/*
+.idea/*
+.idea
+build/*
+node_modules
+node_modules/*
+third_party
+third_party/*

@@ -1,0 +1,32 @@
+{
+  "name": "chatopt-app",
+  "version": "1.0.0",
+  "description": "Opensource AI Chat software, your offline AI assistant ChatOPT <ChatOptions>.",
+  "main": "src/main.js",
+  "scripts": {
+    "start": "electron ./src/main.js",
+    "postinstall": "cd third_party/open_webui && npm install",
+    "ui:build": "cd third_party/open_webui && npm run pyodide:fetch && cross-env VITE_OUT_DIR=../build/ui vite build --config ../../vite.config.js",
+    "backend:build": "",
+    "backend:test": "",
+    "pyodide:fetch": "node third_party/open_webui/scripts/prepare-pyodide.js"
+  },
+  "keywords": [
+    "ChatGPT",
+    "Assistant",
+    "Offline",
+    "AI",
+    "Model",
+    "Chat"
+  ],
+  "author": "Travis Tang",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^31.1.0"
+  },
+  "dependencies": {
+    "cross-env": "^7.0.3",
+    "tree-kill": "^1.2.2",
+    "vite": "^5.3.3"
+  }
+}

@@ -35,7 +35,12 @@
   "dependencies": {
     "@electron/remote": "^2.1.2",
     "@radix-ui/themes": "^3.1.1",
+    "electron-is-dev": "^3.0.1",
+    "fs": "^0.0.1-security",
+    "node-polyfill-webpack-plugin": "^4.0.0",
+    "path-browserify": "^1.0.1",
     "pyodide": "^0.26.1",
+    "react-app-rewired": "^2.2.1",
     "tree-kill": "^1.2.2",
     "vite": "^5.3.3"
   }

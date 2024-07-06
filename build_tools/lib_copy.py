@@ -17,10 +17,10 @@ def process_file(file_path, dest_folder):
     if file_path.endswith('.py'):
         compiled_file = py_compile.compile(file_path, cfile=file_path + 'c')
         dest_path = os.path.join(dest_folder, os.path.basename(compiled_file))
-        shutil.move(compiled_file, dest_path)
+        shutil.copy2(compiled_file, dest_path)
     else:
         dest_path = os.path.join(dest_folder, os.path.basename(file_path))
-        shutil.move(file_path, dest_path)
+        shutil.copy2(file_path, dest_path)
 
 
 def process_folder(folder_path, dest_folder):
@@ -55,7 +55,7 @@ if __name__ == "__main__":
     filenames = file_copies
 
     script_path = os.path.dirname(os.path.abspath(__file__))
-    target_folder = os.path.join(script_path, "../", "dist", "Backend", "_internal")
+    target_folder = os.path.join(script_path, "../", "dist", "ChatOPT", "_internal")
     search_paths = os.environ['PATH'].split(os.pathsep) + [os.getcwd()]
 
     main(filenames, target_folder, search_paths)

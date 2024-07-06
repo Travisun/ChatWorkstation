@@ -6,12 +6,13 @@
   "scripts": {
     "start": "electron ./src/main.js",
     "postinstall": "cd third_party/open_webui && yarn",
-    "ui:build": "npm run pyodide:fetch && cross-env VITE_OUT_DIR=../build/ui vite build --config ./vite.config.js --emptyOutDir",
-    "backend:build": "pyinstaller start.spec",
-    "backend:test": "",
-    "backend:run": "cross-env-shell dist/ChatOPT_Libs/chat_options.exe",
+    "ui:build": "cd third_party/open_webui && npm run build",
+    "ui:copy": "cross-env VIRTUAL_ENV=.venv && %VIRTUAL_ENV%\\Scripts\\python .\\build_tools\\file_copy.py .\\third_party\\open_webui\\build\\ .\\dist\\ChatOPT\\build && %VIRTUAL_ENV%\\Scripts\\python .\\build_tools\\file_copy.py .\\third_party\\open_webui\\static\\ .\\dist\\ChatOPT\\_internal\\static",
+    "backend:build": "cross-env VIRTUAL_ENV=.venv && %VIRTUAL_ENV%\\Scripts\\pyinstaller start.spec",
+    "backend:test": "cross-env VIRTUAL_ENV=.venv && %VIRTUAL_ENV%\\Scripts\\python start.py",
+    "backend:run": "cross-env-shell dist/ChatOPT/Backend.exe",
     "pyodide:fetch": "cd third_party/open_webui && node scripts/prepare-pyodide.js",
-    "backend:compilelibs": "python build_tools/lib_compiler.py && python build_tools/lib_copy.py"
+    "backend:compilelibs": "cross-env VIRTUAL_ENV=.venv && %VIRTUAL_ENV%\\Scripts\\python build_tools/lib_compiler.py && %VIRTUAL_ENV%\\Scripts\\python build_tools/lib_copy.py"
   },
   "keywords": [
     "ChatGPT",
@@ -24,6 +25,8 @@
   "author": "Travis Tang",
   "license": "ISC",
   "devDependencies": {
+    "copyfiles": "^2.4.1",
+    "cpx": "^1.5.0",
     "cross-env": "^7.0.3",
     "cross-env-shell": "^7.0.3",
     "electron": "^31.1.0"

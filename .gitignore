@@ -11,3 +11,4 @@ build_tools/__pycache__
 build_tools/__pycache__/*
 dist
 dist/*
+.ipynb_checkpoints

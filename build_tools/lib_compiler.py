@@ -1,4 +1,5 @@
 import os
+import site
 import sys
 import compileall
 import shutil
@@ -28,12 +29,12 @@ def custom_compile_file(file_path, base_dir, output_dir, logger):
             # 构建目标路径，保持目录结构
             rel_path = os.path.relpath(file_path, base_dir)
             dest_path = os.path.join(output_dir, rel_path)
-            dest_path = Path(dest_path).with_suffix('.pyc')
+            dest_path = remove_middle_path(Path(dest_path).with_suffix('.pyc'))
             dest_dir = os.path.dirname(dest_path)
             if not os.path.exists(dest_dir):
                 os.makedirs(dest_dir)
             # 移动 .pyc 文件到目标路径
-            shutil.move(str(compiled_file_path), str(dest_path))
+            shutil.copy2(str(compiled_file_path), str(dest_path))
             logger.info(f"{Fore.GREEN}Successfully compiled and moved file: {file_path} -> {dest_path}")
         else:
             logger.error(f"{Fore.RED}Failed to compile file: {file_path}")
@@ -48,7 +49,7 @@ def copy_non_py_files(src_dir, dest_dir, logger):
             if not file.endswith(".py"):
                 src_file_path = os.path.join(root, file)
                 rel_path = os.path.relpath(src_file_path, src_dir)
-                dest_file_path = os.path.join(dest_dir, rel_path)
+                dest_file_path = remove_middle_path(os.path.join(dest_dir, rel_path))
                 dest_file_dir = os.path.dirname(dest_file_path)
                 if not os.path.exists(dest_file_dir):
                     os.makedirs(dest_file_dir)
@@ -67,12 +68,38 @@ def custom_compile_dir(dir_path, base_dir, output_dir, logger):
             else:
                 src_file_path = os.path.join(root, file)
                 rel_path = os.path.relpath(src_file_path, base_dir)
-                dest_file_path = os.path.join(output_dir, rel_path).replace(os.path.join("Lib", "site-packages"), "")
+                dest_file_path = remove_middle_path(os.path.join(output_dir, rel_path))
                 dest_dir = os.path.dirname(dest_file_path)
                 if not os.path.exists(dest_dir):
                     os.makedirs(dest_dir)
                 shutil.copy2(src_file_path, dest_file_path)
                 logger.info(f"{Fore.GREEN}Copied non-Python file: {src_file_path} -> {dest_file_path}")
+
+
+def remove_middle_path(path):
+    # 使用 os.path.normpath 规范化路径
+    normalized_path = os.path.normpath(path)
+    # 使用 os.path.split 分割路径为目录和文件
+    parts = normalized_path.split(os.sep)
+    # 需要移除的 Path
+    po_paths = (os.path.normpath(get_site_packages_path()).split(os.sep))[-2:]
+
+    # 移除指定的部分
+    filtered_parts = [part for part in parts if part not in po_paths]
+
+    # 重新组合路径
+    new_path = os.sep.join(filtered_parts)
+    return new_path
+
+def get_site_packages_path():
+    # 获取所有的 site-packages 目录
+    site_packages = site.getsitepackages()
+    # 查找包含 site-packages 的路径
+    for path in site_packages:
+        if 'site-packages' in path:
+            return path
+    # 如果没有找到，返回一个提示
+    return ""
 
 def compile_module(module_name, output_dir, logger):
     # 获取模块的文件路径
@@ -87,7 +114,7 @@ def compile_module(module_name, output_dir, logger):
     # 检查模块是否是 .pyd 文件
     if module_path.endswith('.pyd'):
         rel_path = os.path.relpath(module_path, sys.prefix)
-        dest_path = os.path.join(output_dir, rel_path)
+        dest_path = remove_middle_path(os.path.join(output_dir, rel_path))
         dest_dir = os.path.dirname(dest_path)
         if not os.path.exists(dest_dir):
             os.makedirs(dest_dir)
@@ -126,7 +153,7 @@ if __name__ == "__main__":
 
     script_path = os.path.dirname(os.path.abspath(__file__))
     # 定义模块输出路径
-    output_dir = os.path.join(script_path, "../", "dist", "Backend", "_internal")
+    output_dir = os.path.join(script_path, "../", "dist", "ChatOPT", "_internal")
     print("LIB_OUT_DIR", output_dir)
 
     logger = setup_logging()

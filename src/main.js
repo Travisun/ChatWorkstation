@@ -2,6 +2,7 @@ const { app, BrowserWindow } = require('electron');
 const path = require('path');
 const { exec } = require('child_process');
 const treeKill = require('tree-kill');
+require('@electron/remote/main').initialize();
 
 let pythonServer;
 let pythonServerPid;
@@ -12,10 +13,16 @@ function createWindow() {
   mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
+    frame: false, // 无框窗口
     webPreferences: {
+      nodeIntegration: true,
+      contextIsolation: false,
       preload: path.join(__dirname, 'preload.js')
     }
   });
+
+  // 加载远程命令控制
+  require('@electron/remote/main').enable(mainWindow.webContents);
 
   // 加载初始页面
   mainWindow.loadFile('loading.html');

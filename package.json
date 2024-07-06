@@ -8,9 +8,10 @@
     "postinstall": "cd third_party/open_webui && yarn",
     "ui:build": "cd third_party/open_webui && npm run build",
     "ui:copy": "cross-env VIRTUAL_ENV=.venv && %VIRTUAL_ENV%\\Scripts\\python .\\build_tools\\file_copy.py .\\third_party\\open_webui\\build\\ .\\dist\\ChatOPT\\build && %VIRTUAL_ENV%\\Scripts\\python .\\build_tools\\file_copy.py .\\third_party\\open_webui\\static\\ .\\dist\\ChatOPT\\_internal\\static",
-    "backend:build": "cross-env VIRTUAL_ENV=.venv && %VIRTUAL_ENV%\\Scripts\\pyinstaller start.spec",
+    "backend:build": "cross-env VIRTUAL_ENV=.venv && %VIRTUAL_ENV%\\Scripts\\pyinstaller start.spec && %VIRTUAL_ENV%\\Scripts\\python .\\build_tools\\file_copy.py .\\.env .\\dist\\ChatOPT\\",
     "backend:test": "cross-env VIRTUAL_ENV=.venv && %VIRTUAL_ENV%\\Scripts\\python start.py",
     "backend:run": "cross-env-shell dist/ChatOPT/Backend.exe",
+    "backend:addtional-files-comsile": "cross-env VIRTUAL_ENV=.venv && %VIRTUAL_ENV%\\Scripts\\python build_tools\\files_compile_copy.py .\\third_party\\open_webui\\backend\\apps\\webui\\internal .\\dist\\ChatOPT\\_internal\\apps\\webui\\internal\\",
     "pyodide:fetch": "cd third_party/open_webui && node scripts/prepare-pyodide.js",
     "backend:compilelibs": "cross-env VIRTUAL_ENV=.venv && %VIRTUAL_ENV%\\Scripts\\python build_tools/lib_compiler.py && %VIRTUAL_ENV%\\Scripts\\python build_tools/lib_copy.py"
   },

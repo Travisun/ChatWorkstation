@@ -6,7 +6,10 @@ function App() {
   return (
     <div className="App">
         <HeaderBar />
-        <BootloaderComponent />
+        <BootloaderComponent
+            src={"http://localhost:8080"}
+            title="ChatOPT"
+        />
     </div>
   );
 }

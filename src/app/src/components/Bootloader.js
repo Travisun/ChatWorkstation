@@ -1,14 +1,15 @@
-// src/components/MyComponent.js
+// src/components/BootloaderComponent.js
 import React from 'react';
-import {Box, Flex} from "@radix-ui/themes";
 
-const BootloaderComponent = () => {
+const BootloaderComponent = ({ src, title}) => {
   return (
-    <div>
-      <Flex>
-          sdfsd
-        </Flex>
-    </div>
+    <iframe
+      src={src}
+      title={title}
+      width="100%"
+      height="100vh"
+      style={{ border: 'none', display: 'block' , height: 'calc(100vh - 55px)'}}
+    />
   );
 };
 

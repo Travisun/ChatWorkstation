@@ -1,38 +1,33 @@
 // src/components/HeaderBar.js
 import React, { useState, useEffect } from 'react';
-import { styled } from '@stitches/react';
-import * as Toolbar from '@radix-ui/react-toolbar';
-import { Cross2Icon, MinusIcon, PlusIcon, FrameIcon } from '@radix-ui/react-icons';
+import {
+  Cross2Icon,
+  MinusIcon,
+  EnterFullScreenIcon,
+  ExitFullScreenIcon
+} from '@radix-ui/react-icons';
+import {Box, Flex, IconButton} from "@radix-ui/themes";
 
-const HeaderContainer = styled(Toolbar.Root, {
-  display: 'flex',
-  justifyContent: 'space-between',
-  alignItems: 'center',
-  width: '100%',
-  height: '30px',
-  backgroundColor: '#282c34',
-  color: 'white',
-  // padding: '0 10px',
-  webkitAppRegion: 'drag', // Enable window dragging
-});
-
-const Button = styled(Toolbar.Button, {
-  backgroundColor: 'transparent',
-  border: 'none',
-  color: 'white',
-  cursor: 'pointer',
-  webkitAppRegion: 'no-drag', // Disable window dragging on buttons
-});
+import "./HeaderBar.scss"
 
 const HeaderBar = () => {
   const [isMaximized, setIsMaximized] = useState(false);
 
   useEffect(() => {
-    window.electron.ipcRenderer.on('window-maximized', () => setIsMaximized(true));
-    window.electron.ipcRenderer.on('window-unmaximized', () => setIsMaximized(false));
+    const handleMaximize = () => setIsMaximized(true);
+    const handleUnmaximize = () => setIsMaximized(false);
+
+    window.electron.ipcRenderer.on('window-maximized', handleMaximize);
+    window.electron.ipcRenderer.on('window-unmaximized', handleUnmaximize);
+
+    return () => {
+      window.electron.ipcRenderer.removeListener('window-maximized', handleMaximize);
+      window.electron.ipcRenderer.removeListener('window-unmaximized', handleUnmaximize);
+    };
   }, []);
 
   const handleMinimize = () => {
+    console.log(200)
     window.electron.ipcRenderer.send('minimize-window');
   };
 
@@ -45,20 +40,25 @@ const HeaderBar = () => {
   };
 
   return (
-    <HeaderContainer>
-      <div>My App</div>
-      <div>
-        <Button onClick={handleMinimize}>
-          <MinusIcon />
-        </Button>
-        <Button onClick={handleMaximize}>
-          {isMaximized ? <FrameIcon /> : <PlusIcon />}
-        </Button>
-        <Button onClick={handleClose}>
-          <Cross2Icon />
-        </Button>
-      </div>
-    </HeaderContainer>
+    <div className="header-container">
+      <Flex justify={"start"} className="header-brand">My App</Flex>
+      <Box position={"right"}>
+        <Flex className="header-actions" align={"end"} justify={"end"}>
+          <IconButton className="header-button" onClick={handleMinimize}  variant="soft">
+            <MinusIcon width={18} height={18} />
+          </IconButton>
+          <IconButton className="header-button" onClick={handleMaximize}  variant="soft">
+            <EnterFullScreenIcon width={18} height={18} />
+          </IconButton>
+          <IconButton className="header-button" onClick={handleMaximize}  variant="soft">
+            <ExitFullScreenIcon width={18} height={18} />
+          </IconButton>
+          <IconButton className="header-button" onClick={handleClose}  variant="soft">
+            <Cross2Icon width={18} height={18} />
+          </IconButton>
+        </Flex>
+      </Box>
+    </div>
   );
 };
 

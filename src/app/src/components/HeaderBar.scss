@@ -1,0 +1,56 @@
+/* src/components/HeaderBar.scss */
+
+.App{
+  height:100vh;
+
+}
+#root{
+  height:100vh !important;
+}
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 55px;
+  background-color: #fff;
+  color: white;
+  //padding: 0 10px;
+  overflow: hidden;
+  webkitAppRegion: drag !important;
+  -webkit-app-region: drag !important; // Enable window dragging
+}
+
+.header-button {
+  //background-color: transparent;
+  border: none;
+  color: white;
+  cursor: pointer;
+  z-index:2000;
+  webkitAppRegion: no-drag !important;
+  -webkit-app-region: no-drag !important; // Disable window dragging on buttons
+  background-color: transparent !important;
+
+  svg{
+    fill: #747c8a !important;
+    color: #747c8a !important;
+  }
+}
+
+.header-button:hover, .header-button:focus, .header-button:active{
+  svg{
+    fill: #323236 !important;
+    color: #323236 !important;
+  }
+}
+.header-brand{
+  padding-left: 20px;
+  color: #323236 !important;
+  font-weight: bold !important;
+}
+.header-actions {
+  //justify-content: end;
+  //display: grid;
+  //text-align: right;
+  padding-right: 20px;
+}

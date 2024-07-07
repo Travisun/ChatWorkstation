@@ -9,6 +9,9 @@ contextBridge.exposeInMainWorld('electron', {
       if (validChannels.includes(channel)) {
         ipcRenderer.on(channel, (event, ...args) => func(...args));
       }
-    }
-  }
+    },
+    removeListener: (channel, func) => {
+      ipcRenderer.removeListener(channel, func);
+    },
+  },
 });

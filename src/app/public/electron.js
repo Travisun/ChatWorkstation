@@ -1,7 +1,7 @@
 // public/electron.js
 const { exec } = require('child_process');
 
-const { app, BrowserWindow, ipcMain } = require('electron');
+const { app, BrowserWindow, ipcMain, session } = require('electron');
 const path = require('path');
 const treeKill = require('tree-kill');
 
@@ -57,6 +57,7 @@ async function createWindow() {
   });
 
   ipcMain.on('close-window', () => {
+    console.log("Get Command for Close Window")
     win.close();
   });
 
@@ -68,13 +69,6 @@ async function createWindow() {
     }
     win = null;
   });
-  app.on('will-quit', () => {
-  // 终止Python服务器进程
-  if (pythonServerPid) {
-    treeKill(pythonServerPid);
-  }
-});
-
 }
 
 app.whenReady().then(() => {
@@ -99,28 +93,28 @@ app.whenReady().then(() => {
     }
   });
 
+  // 处理权限请求
+    session.defaultSession.setPermissionRequestHandler((webContents, permission, callback) => {
+        console.log("Permission request handler: " + permission)
+        if (['clipboard-read', 'media', 'audioCapture', 'videoCapture'].includes(permission)) {
+            callback(true);
+        } else {
+            callback(false);
+        }
+    });
+
 });
+
+app.on('will-quit', () => {
+  // 终止Python服务器进程
+  if (pythonServerPid) {
+    treeKill(pythonServerPid);
+  }
+});
+
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
     app.quit();
   }
 });
 
-app.on('web-contents-created', (event, contents) => {
-  contents.on('select-microphone', (event, devices, callback) => {
-    event.preventDefault();
-    callback(devices[0]); // 默认选择第一个设备
-  });
-
-  contents.on('select-audio-output', (event, devices, callback) => {
-    event.preventDefault();
-    callback(devices[0]); // 默认选择第一个设备
-  });
-});
-// 禁止手动重载页面
-window.addEventListener('beforeunload', (event) => {
-    // 阻止默认行为
-    event.preventDefault();
-    // Chrome 需要设置 returnValue
-    event.returnValue = '';
-});

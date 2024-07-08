@@ -9,6 +9,7 @@ import {
 import {Box, Flex, IconButton} from "@radix-ui/themes";
 
 import "./HeaderBar.scss"
+import LogoComponent from "./Logo";
 
 const HeaderBar = () => {
   const [isMaximized, setIsMaximized] = useState(false);
@@ -41,7 +42,7 @@ const HeaderBar = () => {
 
   return (
     <div className="header-container">
-      <Flex justify={"start"} className="header-brand">My App</Flex>
+      <Flex justify={"start"} className="header-brand"><span style={{height: '25px', width: '25px'}} ><LogoComponent /></span> <span className={"brand"}>ChatOPT</span></Flex>
       <Box position={"right"}>
         <Flex className="header-actions" align={"end"} justify={"end"}>
           <IconButton className="header-button" onClick={handleMinimize}  variant="soft">

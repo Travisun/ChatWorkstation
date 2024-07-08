@@ -47,6 +47,11 @@
   padding-left: 20px;
   color: #323236 !important;
   font-weight: bold !important;
+  overflow: hidden !important;
+  .brand{
+    margin-left: 10px !important;
+    font-size: 1.1rem !important;
+  }
 }
 .header-actions {
   //justify-content: end;

@@ -48,10 +48,10 @@ const HeaderBar = () => {
           <IconButton className="header-button" onClick={handleMinimize}  variant="soft">
             <MinusIcon width={18} height={18} />
           </IconButton>
-          <IconButton className="header-button" onClick={handleMaximize}  variant="soft">
+          <IconButton style={{display: isMaximized?'none':'flex'}} className="header-button" onClick={handleMaximize}  variant="soft">
             <EnterFullScreenIcon width={18} height={18} />
           </IconButton>
-          <IconButton className="header-button" onClick={handleMaximize}  variant="soft">
+          <IconButton style={{display: isMaximized?'flex':'none'}} className="header-button" onClick={handleMaximize}  variant="soft">
             <ExitFullScreenIcon width={18} height={18} />
           </IconButton>
           <IconButton className="header-button" onClick={handleClose}  variant="soft">

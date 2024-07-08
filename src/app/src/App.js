@@ -8,7 +8,7 @@ function App() {
         <HeaderBar />
         <BootloaderComponent
             src={"http://localhost:8080"}
-            title="ChatOPT"
+            title="ChatWorkstation"
         />
     </div>
   );

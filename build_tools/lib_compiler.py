@@ -153,7 +153,7 @@ if __name__ == "__main__":
 
     script_path = os.path.dirname(os.path.abspath(__file__))
     # 定义模块输出路径
-    output_dir = os.path.join(script_path, "../", "dist", "ChatOPT", "_internal")
+    output_dir = os.path.join(script_path, "../", "dist", "ChatWorkstation", "_internal")
     print("LIB_OUT_DIR", output_dir)
 
     logger = setup_logging()

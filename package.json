@@ -1,17 +1,17 @@
 {
-  "name": "chatopt-app",
+  "name": "ChatWorkstation-app",
   "version": "1.0.0",
-  "description": "Opensource AI Chat software, your offline AI assistant ChatOPT <ChatOptions>.",
+  "description": "Opensource AI Chat software, your offline AI assistant ChatWorkstation <ChatWorkstationions>.",
   "main": "src/main.js",
   "scripts": {
     "start": "electron ./src/main.js",
     "postinstall": "cd third_party/open_webui && yarn",
     "ui:build": "cd third_party/open_webui && npm run build",
-    "ui:copy": "cross-env VIRTUAL_ENV=.venv && %VIRTUAL_ENV%\\Scripts\\python .\\build_tools\\file_copy.py .\\third_party\\open_webui\\build\\ .\\dist\\ChatOPT\\build && %VIRTUAL_ENV%\\Scripts\\python .\\build_tools\\file_copy.py .\\third_party\\open_webui\\static\\ .\\dist\\ChatOPT\\_internal\\static",
-    "backend:build": "cross-env VIRTUAL_ENV=.venv && %VIRTUAL_ENV%\\Scripts\\pyinstaller start.spec && %VIRTUAL_ENV%\\Scripts\\python .\\build_tools\\file_copy.py .\\.env .\\dist\\ChatOPT\\",
+    "ui:copy": "cross-env VIRTUAL_ENV=.venv && %VIRTUAL_ENV%\\Scripts\\python .\\build_tools\\file_copy.py .\\third_party\\open_webui\\build\\ .\\dist\\ChatWorkstation\\build && %VIRTUAL_ENV%\\Scripts\\python .\\build_tools\\file_copy.py .\\third_party\\open_webui\\static\\ .\\dist\\ChatWorkstation\\_internal\\static",
+    "backend:build": "cross-env VIRTUAL_ENV=.venv && %VIRTUAL_ENV%\\Scripts\\pyinstaller start.spec && %VIRTUAL_ENV%\\Scripts\\python .\\build_tools\\file_copy.py .\\.env .\\dist\\ChatWorkstation\\",
     "backend:test": "cross-env VIRTUAL_ENV=.venv && %VIRTUAL_ENV%\\Scripts\\python start.py",
-    "backend:run": "cross-env-shell dist/ChatOPT/Backend.exe",
-    "backend:addtional-files-comsile": "cross-env VIRTUAL_ENV=.venv && %VIRTUAL_ENV%\\Scripts\\python build_tools\\files_compile_copy.py .\\third_party\\open_webui\\backend\\apps\\webui\\internal .\\dist\\ChatOPT\\_internal\\apps\\webui\\internal\\",
+    "backend:run": "cross-env-shell dist/ChatWorkstation/Backend.exe",
+    "backend:addtional-files-comsile": "cross-env VIRTUAL_ENV=.venv && %VIRTUAL_ENV%\\Scripts\\python build_tools\\files_compile_copy.py .\\third_party\\open_webui\\backend\\apps\\webui\\internal .\\dist\\ChatWorkstation\\_internal\\apps\\webui\\internal\\",
     "pyodide:fetch": "cd third_party/open_webui && node scripts/prepare-pyodide.js",
     "backend:compilelibs": "cross-env VIRTUAL_ENV=.venv && %VIRTUAL_ENV%\\Scripts\\python build_tools/lib_compiler.py && %VIRTUAL_ENV%\\Scripts\\python build_tools/lib_copy.py"
   },

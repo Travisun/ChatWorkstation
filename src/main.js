@@ -31,7 +31,7 @@ async function createWindow() {
     mainWindow.loadURL('http://localhost:3000');
     mainWindow.webContents.openDevTools(); // 开启调试窗口
   } else {
-    mainWindow.loadFile(path.join(__dirname, 'chatopt_app/build/index.html'));
+    mainWindow.loadFile(path.join(__dirname, 'ChatWorkstation_app/build/index.html'));
   }
 
   // 打开开发者工具

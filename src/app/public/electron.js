@@ -117,3 +117,10 @@ app.on('web-contents-created', (event, contents) => {
     callback(devices[0]); // 默认选择第一个设备
   });
 });
+// 禁止手动重载页面
+window.addEventListener('beforeunload', (event) => {
+    // 阻止默认行为
+    event.preventDefault();
+    // Chrome 需要设置 returnValue
+    event.returnValue = '';
+});

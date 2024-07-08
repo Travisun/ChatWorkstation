@@ -49,17 +49,17 @@ async function createWindow() {
 
 app.whenReady().then(() => {
   // 启动Python服务器
-  // pythonServer = exec('python ./start.py', (error, stdout, stderr) => {
-  //   if (error) {
-  //     console.error(`exec error: ${error}`);
-  //     return;
-  //   }
-  //   console.log(`stdout: ${stdout}`);
-  //   console.error(`stderr: ${stderr}`);
-  // });
-  //
-  // // 获取Python服务器进程的PID
-  // pythonServerPid = pythonServer.pid;
+  pythonServer = exec('python ./start.py', (error, stdout, stderr) => {
+    if (error) {
+      console.error(`exec error: ${error}`);
+      return;
+    }
+    console.log(`stdout: ${stdout}`);
+    console.error(`stderr: ${stderr}`);
+  });
+
+  // 获取Python服务器进程的PID
+  pythonServerPid = pythonServer.pid;
 
   createWindow();
 

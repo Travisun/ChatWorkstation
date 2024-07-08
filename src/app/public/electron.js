@@ -14,8 +14,8 @@ async function createWindow() {
   win = new BrowserWindow({
     width: 800,
     height: 600,
-    minWidth: 760,
-    minHeight: 470,
+    minWidth: 470,
+    minHeight: 760,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
       contextIsolation: true,
@@ -79,7 +79,7 @@ async function createWindow() {
 
 app.whenReady().then(() => {
   // 启动Python服务器
-  pythonServer = exec('python ./start.py', (error, stdout, stderr) => {
+  pythonServer = exec('python ./../../start.py', (error, stdout, stderr) => {
     if (error) {
       console.error(`exec error: ${error}`);
       return;

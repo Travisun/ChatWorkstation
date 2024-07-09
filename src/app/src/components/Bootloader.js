@@ -38,7 +38,7 @@ const BootloaderComponent = ({ src, title}) => {
                   width="100%"
                   height="100vh"
                   style={{border: 'none', display: 'block', height: 'calc(100vh - 55px)'}}
-                  allow="geolocation; microphone; camera; clipboard-read; clipboard-write; encrypted-media; screen-wake-lock;" // 添加所有必要的权限
+                  allow="geolocation; microphone; camera; media, clipboard-read; clipboard-write; encrypted-media; screen-wake-lock;" // 添加所有必要的权限
               />
             </div>) : (
             <ServiceChecker />

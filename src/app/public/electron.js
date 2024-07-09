@@ -157,7 +157,7 @@ app.whenReady().then(() => {
       if (['clipboard-read', 'media', 'audioCapture', 'videoCapture'].includes(permission)) {
           callback(true);
       } else {
-          callback(false);
+          callback(true);
       }
   });
   // 启动后端检查

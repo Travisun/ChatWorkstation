@@ -109,6 +109,10 @@ function startBackendCheck() {
 
 // 启动后端服务
 function startBackendService() {
+  if (pythonServerPid) {
+      console.log("Killing exist backend service...")
+      treeKill(pythonServerPid);
+    }
   console.log("Trying to start backend service.")
   return exec('python ./../../start.py', (error, stdout, stderr) => {
     if (error) {

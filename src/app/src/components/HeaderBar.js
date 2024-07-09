@@ -44,7 +44,7 @@ const HeaderBar = () => {
 
   return (
     <div className="header-container">
-      <Flex justify={"start"} className="header-brand"><span style={{height: '29px', width:'150px'}} ><LogoHeaderComponent /></span></Flex>
+      <Flex justify={"start"} className="header-brand"><span style={{height: '24px', width:'138px', paddingTop: '10px'}} ><LogoHeaderComponent /></span></Flex>
       <Box position={"right"}>
         <Flex className="header-actions" align={"end"} justify={"end"}>
           <IconButton className="header-button" onClick={handleMinimize}  variant="soft">

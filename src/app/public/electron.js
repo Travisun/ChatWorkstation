@@ -17,6 +17,7 @@ async function createWindow() {
     minWidth: 470,
     minHeight: 760,
     webPreferences: {
+      nodeIntegration: true,
       preload: path.join(__dirname, 'preload.js'),
       contextIsolation: true,
       enableRemoteModule: false,
@@ -60,25 +61,6 @@ async function createWindow() {
     console.log("Get Command for Close Window")
     win.close();
   });
-
-  // 检测后端服务器启动
-  const checkBackendService = async () => {
-    try {
-      const response = await fetch('http://localhost:8080/api/config');
-      if (response.ok) {
-        const data = await response.json();
-        if (data.version) {
-          console.log(`Backend service started with version: ${data.version}`);
-          win.webContents.send('backend-started', data.version);
-          clearInterval(interval);
-        }
-      }
-    } catch (error) {
-      console.log('Backend service is not available yet...');
-    }
-  };
-
-  const interval = setInterval(checkBackendService, 5000);
 
   // 监听窗口关闭事件
   win.on('closed', () => {

@@ -14,3 +14,7 @@ dist/*
 .ipynb_checkpoints
 src/app/node_modules
 src/app/node_modules/*
+src/app/.yarn
+src/app/.yarn/*
+.yarn/
+.yarn/*

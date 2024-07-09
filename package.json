@@ -1,7 +1,7 @@
 {
   "name": "ChatWorkstation-app",
   "version": "1.0.0",
-  "description": "Opensource AI Chat software, your offline AI assistant ChatWorkstation <ChatWorkstationions>.",
+  "description": "Opensource AI Chat software, your offline AI assistant ChatWorkstation <ChatWorkstation>.",
   "main": "src/main.js",
   "scripts": {
     "start": "electron ./src/main.js",

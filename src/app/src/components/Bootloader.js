@@ -1,5 +1,6 @@
 // src/components/BootloaderComponent.js
 import React, {useEffect, useState} from 'react';
+import ServiceChecker from "./ServiceChecker";
 
 
 
@@ -54,7 +55,7 @@ const BootloaderComponent = ({ src, title}) => {
 
   return (
       <>
-        {backendStarted ? (
+        {!backendStarted ? (
             <div onClick={() => requestWakeLock}>
               <iframe
                   src={src}
@@ -65,7 +66,7 @@ const BootloaderComponent = ({ src, title}) => {
                   allow="geolocation; microphone; camera; clipboard-read; clipboard-write; encrypted-media; screen-wake-lock;" // 添加所有必要的权限
               />
             </div>) : (
-            <>Loading...</>
+            <ServiceChecker />
         )}
       </>
   );

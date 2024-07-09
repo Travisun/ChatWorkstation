@@ -8,6 +8,8 @@ const treeKill = require('tree-kill');
 let pythonServer;
 let pythonServerPid;
 let win;
+let interval;
+let timeout;
 
 async function createWindow() {
   const isDev = await import('electron-is-dev');
@@ -72,9 +74,43 @@ async function createWindow() {
   });
 }
 
-app.whenReady().then(() => {
-  // 启动Python服务器
-  pythonServer = exec('python ./../../start.py', (error, stdout, stderr) => {
+
+// 后端服务状态管理
+function startBackendCheck() {
+  clearInterval(interval);
+  clearTimeout(timeout);
+
+  const checkBackendService = async () => {
+    try {
+      console.log("Start Backend Service Check...")
+      const response = await fetch('http://localhost:8080/api/config');
+      if (response.ok) {
+        const data = await response.json();
+        if (data.version) {
+          console.log(`Backend service started with version: ${data.version}`);
+          win.webContents.send('backend-started', data.version);
+          clearInterval(interval);
+          clearTimeout(timeout);
+        }
+      }
+    } catch (error) {
+      console.log('Backend service is not available yet...');
+    }
+  };
+
+  interval = setInterval(checkBackendService, 5000); // 每5秒检测一次
+  timeout = setTimeout(() => {
+    clearInterval(interval);
+    win.webContents.send('backend-failed');
+    console.log('Backend service failed to start within 60 seconds.');
+  }, 60000); // 60秒超时
+}
+
+
+// 启动后端服务
+function startBackendService() {
+  console.log("Trying to start backend service.")
+  return exec('python ./../../start.py', (error, stdout, stderr) => {
     if (error) {
       console.error(`exec error: ${error}`);
       return;
@@ -82,6 +118,23 @@ app.whenReady().then(() => {
     console.log(`stdout: ${stdout}`);
     console.error(`stderr: ${stderr}`);
   });
+}
+
+// 收到前端消息, 继续启动后端服务
+ipcMain.on('retry-backend', () => {
+  // 启动Python服务器
+  pythonServer = startBackendService();
+  // 获取Python服务器进程的PID
+  pythonServerPid = pythonServer.pid;
+  // 重启服务检查
+  startBackendCheck();
+});
+
+// Ready Actions Call
+app.whenReady().then(() => {
+  // 启动Python服务器
+  console.log("Trying to start backend service.")
+  pythonServer = startBackendService();
 
   // 获取Python服务器进程的PID
   pythonServerPid = pythonServer.pid;
@@ -95,15 +148,16 @@ app.whenReady().then(() => {
   });
 
   // 处理权限请求
-    session.defaultSession.setPermissionRequestHandler((webContents, permission, callback) => {
-        console.log("Permission request handler: " + permission)
-        if (['clipboard-read', 'media', 'audioCapture', 'videoCapture'].includes(permission)) {
-            callback(true);
-        } else {
-            callback(false);
-        }
-    });
-
+  session.defaultSession.setPermissionRequestHandler((webContents, permission, callback) => {
+      console.log("Permission request handler: " + permission)
+      if (['clipboard-read', 'media', 'audioCapture', 'videoCapture'].includes(permission)) {
+          callback(true);
+      } else {
+          callback(false);
+      }
+  });
+  // 启动后端检查
+  startBackendCheck();
 });
 
 app.on('will-quit', () => {

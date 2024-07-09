@@ -1,14 +1,37 @@
 // src/components/BootloaderComponent.js
 import React, {useEffect, useState} from 'react';
-import {Box, Flex} from "@radix-ui/themes";
-import LogoComponent from "./Logo";
+import {Text, Flex, Callout, Button} from "@radix-ui/themes";
 import LogoLoadingComponent from "./LogoLoadingComponent";
+import {InfoCircledIcon} from "@radix-ui/react-icons";
 
 
 
 const ServiceCheckerComponent = ({ src, title}) => {
 
   const [backendStarted, setBackendStarted] = useState(false);
+  const [backendFailed, setBackendFailed] = useState(false);
+  const [backendTrying, setBackendTrying] = useState(false);
+
+  useEffect(() => {
+    window.electron.onBackendStarted(() => {
+      setBackendStarted(true);
+      setBackendFailed(false);
+      setBackendTrying(false);
+    });
+
+    window.electron.onBackendFailed(() => {
+      setBackendStarted(false);
+      setBackendFailed(true);
+      setBackendTrying(false);
+    });
+  }, []);
+
+  const retryBackend = () => {
+    window.electron.retryBackend();
+    setBackendFailed(false);
+    console.log("Retrying start backend.");
+    setBackendTrying(true);
+  };
 
   return (
       <Flex
@@ -27,17 +50,29 @@ const ServiceCheckerComponent = ({ src, title}) => {
               alignItems: 'center',
             }}
           >
-                <div style={{padding: '20px', borderRadius: '8px'}}>
-                <span style={{height: '185px', width: '185px', display: 'block'}}>
-                    <LogoLoadingComponent />
-                </span>
+                <div>
+                    <span style={{height: '185px', width: '185px', display: 'block'}}>
+                        <LogoLoadingComponent />
+                    </span>
                 </div>
-                <div style={{padding: '20px', background: 'lightgray', borderRadius: '8px'}}>
-                Chat Workstation
-                </div>
-                <div style={{ padding: '20px', background: 'lightgray', borderRadius: '8px' }}>
-                Item 3
-                </div>
+              {!backendFailed && <div>
+                <Callout.Root color="gray">
+                  <Callout.Icon>
+                    <InfoCircledIcon />
+                  </Callout.Icon>
+                  <Callout.Text>
+                    <Flex as="span" align="center" gap="4">
+                      <Text>哎呀，Chat Workstation 服务启动失败。</Text>
+                      <Button loading={backendTrying} onClick={retryBackend} variant="surface" size="1" my="-2">
+                        立即重试
+                      </Button>
+                    </Flex>
+                  </Callout.Text>
+                </Callout.Root>
+                </div>}
+                {/*<div style={{ padding: '20px', background: 'lightgray', borderRadius: '8px' }}>*/}
+                {/*Item 3*/}
+                {/*</div>*/}
           </Flex>
       </Flex>
   );

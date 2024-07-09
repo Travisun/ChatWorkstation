@@ -8,9 +8,9 @@ const BootloaderComponent = ({ src, title}) => {
 
   const [backendStarted, setBackendStarted] = useState(false);
 
+  // 尝试获取屏幕唤醒权限
   const requestWakeLock = async () => {
     console.log("try to request wakelock");
-
     try {
       const wakeLock = await navigator.wakeLock.request('screen');
       wakeLock.addEventListener('release', () => {
@@ -23,39 +23,14 @@ const BootloaderComponent = ({ src, title}) => {
   };
 
   useEffect(() => {
-    // window.electron.onBackendStarted(() => {
-    //   setBackendStarted(true);
-    // });
-
+    window.electron.onBackendStarted(() => {
+      setBackendStarted(true);
+    });
   }, []);
-
-
-  // 检测后端服务器启动
-  const checkBackendService = async () => {
-    try {
-      const response = await fetch('http://localhost:8080/api/config');
-      if (response.ok) {
-        const data = await response.json();
-        if (data.version && data.status === true) {
-          console.log(`Backend service started with version: ${data.version}`);
-          setBackendStarted(true);
-
-          clearInterval(interval);
-
-          // 请求Wakelock权限
-          // await requestWakeLock();
-        }
-      }
-    } catch (error) {
-      console.log('Backend service is not available yet...');
-    }
-  };
-
-  const interval = setInterval(checkBackendService, 1000);
 
   return (
       <>
-        {!backendStarted ? (
+        {backendStarted ? (
             <div onClick={() => requestWakeLock}>
               <iframe
                   src={src}

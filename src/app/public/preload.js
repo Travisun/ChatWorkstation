@@ -1,8 +1,11 @@
 // public/preload.js
 const { contextBridge, ipcRenderer, clipboard} = require('electron');
 
+// 暴露给前端界面的 API
 contextBridge.exposeInMainWorld('electron', {
-  // onBackendStarted: (callback) => ipcRenderer.on('backend-started', callback),
+  onBackendStarted: (callback) => ipcRenderer.on('backend-started', callback),
+  onBackendFailed: (callback) => ipcRenderer.on('backend-failed', callback),
+  retryBackend: () => ipcRenderer.send('retry-backend'),
   ipcRenderer: {
     send: (channel, data) => ipcRenderer.send(channel, data),
     on: (channel, func) => {

@@ -7,11 +7,26 @@ const BootloaderComponent = ({ src, title}) => {
 
   const [backendStarted, setBackendStarted] = useState(false);
 
-  // useEffect(() => {
-  //   window.electron.onBackendStarted(() => {
-  //     setBackendStarted(true);
-  //   });
-  // }, []);
+  const requestWakeLock = async () => {
+    console.log("try to request wakelock");
+
+    try {
+      const wakeLock = await navigator.wakeLock.request('screen');
+      wakeLock.addEventListener('release', () => {
+        console.log('Wake Lock was released');
+      });
+      console.log('Wake Lock is active');
+    } catch (err) {
+      console.error(`${err.name}, ${err.message}`);
+    }
+  };
+
+  useEffect(() => {
+    // window.electron.onBackendStarted(() => {
+    //   setBackendStarted(true);
+    // });
+
+  }, []);
 
 
   // 检测后端服务器启动
@@ -23,7 +38,11 @@ const BootloaderComponent = ({ src, title}) => {
         if (data.version && data.status === true) {
           console.log(`Backend service started with version: ${data.version}`);
           setBackendStarted(true);
+
           clearInterval(interval);
+
+          // 请求Wakelock权限
+          // await requestWakeLock();
         }
       }
     } catch (error) {
@@ -36,15 +55,18 @@ const BootloaderComponent = ({ src, title}) => {
   return (
       <>
         {backendStarted ? (
-          <iframe
-              src={src}
-              title={title}
-              width="100%"
-              height="100vh"
-              style={{border: 'none', display: 'block', height: 'calc(100vh - 55px)'}}
-          />): (
+            <div onClick={() => requestWakeLock}>
+              <iframe
+                  src={src}
+                  title={title}
+                  width="100%"
+                  height="100vh"
+                  style={{border: 'none', display: 'block', height: 'calc(100vh - 55px)'}}
+                  allow="geolocation; microphone; camera; clipboard-read; clipboard-write; encrypted-media; screen-wake-lock;" // 添加所有必要的权限
+              />
+            </div>) : (
             <>Loading...</>
-          )}
+        )}
       </>
   );
 };

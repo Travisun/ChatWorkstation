@@ -55,7 +55,7 @@ const ServiceCheckerComponent = ({ src, title}) => {
                         <LogoLoadingComponent />
                     </span>
                 </div>
-              {!backendFailed && <div>
+              {backendFailed && <div>
                 <Callout.Root color="gray">
                   <Callout.Icon>
                     <InfoCircledIcon />

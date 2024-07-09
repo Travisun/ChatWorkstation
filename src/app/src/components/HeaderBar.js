@@ -56,7 +56,7 @@ const HeaderBar = () => {
           <IconButton style={{display: isMaximized?'flex':'none'}} className="header-button" onClick={handleMaximize}  variant="soft">
             <ExitFullScreenIcon width={18} height={18} />
           </IconButton>
-          <IconButton className="header-button" onClick={handleClose}  variant="soft">
+          <IconButton className="header-button close-btn" onClick={handleClose}  variant="soft">
             <Cross2Icon width={18} height={18} />
           </IconButton>
         </Flex>

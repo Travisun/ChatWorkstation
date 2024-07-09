@@ -12,7 +12,7 @@
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  height: 55px;
+  //height: 55px;
   background-color: #fff;
   color: white;
   //padding: 0 10px;
@@ -44,7 +44,7 @@
   }
 }
 .header-brand{
-  padding-left: 20px;
+  //padding-left: 20px;
   color: #323236 !important;
   font-weight: bold !important;
   overflow: hidden !important;
@@ -58,5 +58,23 @@
   //justify-content: end;
   //display: grid;
   //text-align: right;
-  padding-right: 20px;
+  //padding-right: 20px;
+  .header-button{
+    width: 50px;
+    border-radius: 0px;
+
+  }
+  .header-button:hover{
+      background-color: #efefef !important;
+  }
+  .header-button:current, .header-button:focus, .header-button:active{
+    background-color: #ffffff !important;
+  }
+  .close-btn:hover{
+    background-color: darkred !important;
+     svg{
+       background-color: darkred;
+       color: #ffffff !important;
+     }
+  }
 }

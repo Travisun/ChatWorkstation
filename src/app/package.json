@@ -6,6 +6,9 @@
   "build": {
     "productName": "ChatWorkstation",
     "appId": "com.chatworkstation.app",
+    "directories": {
+      "output": "../../dist/ChatWorkStation"
+    },
     "mac": {
       "category": "your.app.category.type"
     },
@@ -13,6 +16,22 @@
       "target": "nsis",
       "icon": "src/static/applogo-180.ico",
       "artifactName": "${productName}-Setup-${version}.${ext}"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "installerIcon": "src/static/applogo-180.ico",
+      "uninstallerIcon": "src/static/applogo-180.ico",
+      "installerHeaderIcon": "src/static/applogo-180.ico",
+      "license": "../../EndUserLicenseAgreements.txt",
+      "installerSidebar": "src/static/installer_side.bmp",
+      "uninstallerSidebar": "src/static/installer_side.bmp",
+      "shortcutName": "Chat Workstation",
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "menuCategory": "AI Assistant",
+      "displayLanguageSelector": true,
+      "deleteAppDataOnUninstall": true
     },
     "linux": {
       "target": "AppImage",

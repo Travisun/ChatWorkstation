@@ -1,0 +1,181 @@
+﻿END USER LICENSE AGREEMENT (EULA)
+
+This End User License Agreement ("Agreement") is a legal agreement between you (an individual or a single entity) and Chat Workstation Team regarding the use of Chat Workstation ("Software"). Please read this Agreement carefully before using the Software. By installing, copying, or otherwise using the Software, you agree to be bound by the terms of this Agreement.
+
+0. Provider Identity and Contact Information
+The provider of this Software is Chat Workstation Team, an open-source project group composed of one or more developers and operators. The organization primarily provides free and open-source software services.
+
+Official Website: https://www.chatworkstation.org
+Contact Information: chatworkstation@gmail.com
+
+1. License Grant
+The Company grants you a non-exclusive, non-transferable right to:
+(a) Install and use one copy of the Software on your device for personal and non-commercial use only.
+
+2. License Restrictions
+You may not:
+(a) Copy, modify, translate, decompile, disassemble, or reverse engineer the Software;
+(b) Rent, lease, sell, sublicense, or distribute the Software;
+(c) Remove or alter any copyright notices or other proprietary notices contained in the Software.
+
+3. Intellectual Property
+All rights, title, and interest in and to the Software, including all copyrights, trademarks, and other intellectual property rights, are owned by Chat Workstation Team. This Agreement does not transfer any ownership or rights related to the Software to you.
+
+4. Privacy and Data Collection
+The Company may collect and use certain information when you use the Software. For details on data collection and usage, please refer to our Privacy Policy [link to privacy policy].
+
+5. Disclaimer
+The Software is provided "as is" without any express or implied warranties, including but not limited to implied warranties of merchantability, fitness for a particular purpose, and non-infringement. To the maximum extent permitted by applicable law, the Company disclaims all liability for any damages resulting from the use or inability to use the Software.
+
+6. Limitation of Liability
+In no event shall the Company or its suppliers be liable for any special, incidental, indirect, or consequential damages (including, but not limited to, loss of profits, business interruption, or loss of information) even if the Company has been advised of the possibility of such damages. In any case, the Company's total liability to you for any reason arising from the use of the Software shall not exceed the amount you paid for the Software (if any).
+
+7. Termination
+This Agreement will automatically terminate if you violate any of its terms. Upon termination, you must immediately cease using the Software and delete all copies of the Software.
+
+8. Governing Law
+This Agreement shall be governed by the laws of the People's Republic of China, without regard to its conflict of law provisions. Any disputes arising from this Agreement shall be submitted to the People's Court of Rongchang District, Chongqing, People's Republic of China.
+
+9. Entire Agreement
+This Agreement constitutes the entire agreement between you and the Company regarding the Software and supersedes all prior oral or written communications, proposals, and statements. Any modifications to this Agreement must be in writing and signed by the Company.
+
+10. Contact Information
+If you have any questions about this Agreement, please contact: chatworkstation@gmail.com
+
+11. User Commitments
+You agree to use the Software in a reasonable and lawful manner and not to use the Software for any illegal purpose. You must fully comply with all laws and regulations of the People's Republic of China and the laws and regulations of your location when using the Software. You agree to:
+
+(a) Not use the Software for any illegal, infringing, fraudulent, or other improper purposes;
+(b) Comply with all applicable laws and regulations, including but not limited to data protection, privacy, and intellectual property laws;
+(c) Bear any legal consequences and liabilities resulting from violating these commitments. The software provider and its members shall not be liable for any damages arising from your breach of this commitment.
+
+You acknowledge and agree that any breach of these commitments will result in the automatic termination of this Agreement, and you must immediately cease using the Software and delete all copies.
+
+12. AI Model Usage Terms
+The Software does not represent that the organization provides any AI model services to users. Any AI model services are provided by third parties. Therefore, the software provider and its members are not responsible for any consequences arising from the use of third-party AI model services. You acknowledge and agree:
+
+(a) AI models may make mistakes, and the content generated may be inaccurate, incomplete, or misleading;
+(b) You should only consider AI model responses as general information and not direct references or citations;
+(c) You bear full legal responsibility for your decisions based on AI model-generated content, and any legal consequences arising from such use are your responsibility, not the software provider's or its members';
+(d) When using third-party AI models, you agree to comply with the laws and regulations of the AI model provider's location and their policies.
+
+You acknowledge and agree that the software provider is not liable for any consequences arising from reliance on AI model-generated content.
+
+13. Language and Interpretation
+This Agreement is provided in both Chinese and English. In case of any inconsistency or conflict between the two versions, the Chinese version shall prevail. The Chinese version is the final interpretation.
+
+14. Signing and Effectiveness
+You acknowledge and agree that this Agreement can be signed electronically or in paper form and is legally binding. The following signing methods are recognized and considered effective:
+
+(a) Checking or clicking the agreement button during installation;
+(b) Clicking the agreement button on the website;
+(c) Clicking the agreement button in an email;
+(d) Signing in handwriting;
+(e) Signing using DocuSign.com electronic signature service;
+(f) Signing using other electronic signature methods.
+
+By using any of these methods, you agree to the terms of this Agreement and complete the effective signing. This Agreement is legally binding upon signing and takes effect immediately.
+
+15. Updates to the Agreement
+This Agreement may be modified in the future. When the Agreement is updated, we will post the update on our website and notify users via email, requesting them to read and agree to the revised Agreement. You agree to click the agreement button in the email to confirm the new Agreement.
+
+If you do not sign the new Agreement within 30 days of the email notification (or the date the updated Agreement is posted on the website) but continue to use the Software afterward, you will be deemed to have accepted and agreed to the terms of the revised Agreement. If you do not agree to the new terms, please immediately stop using the Software and its services, and you agree not to use the Software without authorization. You bear all consequences of unauthorized use.
+
+16. Intellectual Property Notice
+The Software typically references multiple open-source projects, code repositories, and open-source static resources. All copyrights and trademarks related to these resources are owned by their respective parties. The Software uses these resources only in compliance with their licensing agreements.
+
+If the Software directly or indirectly provides AI model services, any content created using the AI models is subject to the policies of the respective AI models regarding ownership.
+
+Any software, features, code, images, videos, or parts thereof designed or implemented by the organization are owned by Chat Workstation Team.
+
+--------------------
+
+最终用户使用授权协议 (EULA)
+
+本终端用户许可协议（以下简称“协议”）是用户（个人或单一实体）与 Chat Workstation Team 之间关于 Chat Workstation（以下简称“软件”）的法律协议。请在使用本软件前仔细阅读本协议。一旦您安装、复制或以其他方式使用本软件，即表示您同意受本协议的约束。
+
+0. 提供商身份和联系方式
+本软件的提供商为 Chat Workstation Team，这是一个开源项目小组，由一个或多个软件开发者、运营者自由组成。该组织主要提供免费且开源的软件服务。
+
+官方网站：https://www.chatworkstation.org
+联系方式：chatworkstation@gmail.com
+
+1. 许可授予
+本公司授予您以下非排他性、不可转让的权利：
+(a) 在您的设备上安装和使用本软件的一个副本，仅供个人和非商业用途。
+
+2. 许可限制
+您不得：
+(a) 复制、修改、翻译、反编译、反汇编或逆向工程本软件；
+(b) 出租、租赁、出售、再许可或分发本软件；
+(c) 移除或更改任何本软件包含的版权声明或其他所有权声明。
+
+3. 知识产权
+本软件的所有权利、所有权和利益，包括所有版权、商标和其他知识产权，均归 Chat Workstation Team 所有。本协议不向您转让任何与本软件相关的所有权或权利。
+
+4. 隐私和数据收集
+您使用本软件时，本公司可能会收集和使用某些信息。有关数据收集和使用的详细信息，请参阅我们的隐私政策 [link to privacy policy]。
+
+5. 免责条款
+本软件按“原样”提供，不提供任何明示或暗示的保证，包括但不限于适销性、适合特定用途和非侵权性的暗示保证。在适用法律允许的最大范围内，本公司不对因使用或无法使用本软件而导致的任何损失或损害承担责任。
+
+6. 责任限制
+在任何情况下，本公司及其供应商均不对任何特殊的、偶然的、间接的或后果性的损害（包括但不限于利润损失、业务中断、信息丢失）承担责任，即使本公司已被告知可能发生此类损害。在任何情况下，本公司对您因任何原因使用本软件所产生的全部责任不超过您为本软件支付的金额（如有）。
+
+7. 终止
+如果您违反本协议的任何条款，本协议将在不通知您的情况下自动终止。一旦本协议终止，您必须立即停止使用并删除本软件的所有副本。
+
+8. 适用法律
+本协议应受中华人民共和国法律管辖，不考虑其冲突法条款。任何因本协议引起的争议应提交至中华人民共和国重庆市荣昌区人民法院解决。
+
+9. 完整协议
+本协议构成您与本公司之间关于本软件的完整协议，并取代之前的所有口头或书面的沟通、建议和声明。本协议的任何修改必须由本公司书面签署方可生效。
+
+10. 联系信息
+如果您对本协议有任何疑问，请联系：chatworkstation@gmail.com
+
+11. 用户承诺
+用户承诺将合理、合法地使用本软件，并不得将本软件用于任何非法目的。用户在使用过程中必须完全遵守中华人民共和国的各项法律法规，及其所在地的法律法规。用户承诺并保证：
+
+(a) 不将本软件用于任何违法、侵权、欺诈、或其他不正当用途；
+(b) 遵守所有适用的法律法规，包括但不限于数据保护、隐私和知识产权法律；
+(c) 承担因违反上述承诺而导致的任何违法后果和责任，软件提供方及其任何组织成员不对因用户违反本承诺而产生的任何责任或损失承担责任。
+
+用户确认并同意，任何违反本承诺的行为将导致本协议的自动终止，并且用户将立即停止使用本软件并删除其所有副本。
+
+12. AI 大模型使用条款
+本软件内并不代表本组织向用户提供任何 AI 大模型服务，任何 AI 大模型服务均由第三方提供。因此，软件提供方及其组织成员不对使用第三方 AI 大模型服务造成的任何后果负责。用户承诺并确认：
+
+(a) AI 大模型可能会犯错，生成的内容可能不准确、不完整或具有误导性；
+(b) 用户在每次交流和使用过程中应仅将 AI 大模型的回答作为一般了解，不应将其作为直接参考或引用的依据；
+(c) 用户应对自己的决定承担全部法律责任，因使用 AI 大模型生成的内容而导致的任何法律后果均由用户自行承担，与软件提供方及其组织成员无关；
+(d) 用户在使用第三方 AI 大模型的过程中，承诺遵守 AI 大模型提供商所在地区的法律法规和 AI 大模型提供商的各项规章制度，并明确知晓此点。
+
+用户确认并同意，任何因依赖 AI 大模型生成的内容而采取的行动所导致的后果，软件提供方不承担任何责任。
+
+13. 语言和解释权
+本协议同时提供中文版本和英文翻译版本。若两者之间存在任何不一致或冲突，应以中文版本为准。中文版本为最终解释权。
+
+14. 签署和生效
+用户明确知道并同意，本协议可以通过电子或纸质的方式签署，且均具有法律效力。以下签署方式双方都认可并视为有效签署：
+
+(a) 在安装过程中勾选或点击同意按钮；
+(b) 在网站上点击同意协议按钮；
+(c) 点击发送到电子邮件中的同意协议按钮；
+(d) 通过手写字迹形式完成签署；
+(e) 通过 DocuSign.com 提供的电子签署服务；
+(f) 通过其他电子签名形式签署。
+
+通过以上任一方式，用户均表示已同意本协议的各项条款并完成有效签署。本协议一经签署，即具有法律约束力并立即生效。
+
+15. 协议的更新
+本用户协议可能在未来发生变更。当协议发生变更时，我们会通过在线网站发布更新，同时发送通知到用户的电子邮件，要求其重新阅读并同意协议的修订版。用户明确同意，在收到更新协议的电子邮件通知后，将点击电子邮件中的同意按钮以完成新协议的确认签署。
+
+若用户在提供商发出电子邮件通知日期（或官网公布协议更新日期）起30天内未完成新协议的签署，但在此之后仍然使用本软件，则视为用户已认可且同意最新修订版协议的各项条款。如果用户不同意新的协议条款，请立即停止使用本软件及其任何服务，并明确承诺不再未经授权使用本软件，对其违规使用造成的一切后果自负。
+
+16. 知识产权说明
+本软件通常由多个开源项目、源代码库、开源静态资源一起引用开发，与这些资源相关的著作权、商标权均为其相应各方享有，本软件仅在符合其授权协议的情况下使用。
+
+若本软件中直接或间接提供了 AI 大模型服务，用户使用 AI 大模型所创造的任何内容，其归属权均依据所使用的 AI 大模型的对应政策确定。
+
+但由本组织自行设计或实现的软件、功能、代码、图片、视频等部分或全部，其所有权均归 Chat Workstation Team 所有。

@@ -9,13 +9,13 @@ i18n
   .use(LanguageDetector) // 自动检测用户语言的插件
   .use(initReactI18next) // React绑定
   .init({
-    fallbackLng: 'en', // 当用户语言不可用时的默认语言
+    fallbackLng: 'en_US', // 当用户语言不可用时的默认语言
     debug: false, // 开启调试模式
     interpolation: {
       escapeValue: false, // React已经做了防注入处理
     },
     backend: {
-      loadPath: '/locales/{{lng}}/{{ns}}.json', // 语言文件路径
+      loadPath: 'locales/{{lng}}/{{ns}}.json', // 语言文件路径
     },
   });
 

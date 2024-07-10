@@ -18,6 +18,7 @@ async function createWindow() {
     height: 600,
     minWidth: 470,
     minHeight: 760,
+    title: "ChatWorkstation",  // 这里设置窗口标题
     webPreferences: {
       nodeIntegration: false,
       preload: path.join(__dirname, 'preload.js'),
@@ -35,6 +36,15 @@ async function createWindow() {
       : `file://${path.join(__dirname, '../build/index.html')}`
   );
 
+  // 监听键盘事件 打开开发者控制台
+  const { globalShortcut } = require('electron');
+
+  globalShortcut.register('Shift+Tab+F2', () => {
+    if (win) {
+      win.webContents.openDevTools();
+    }
+  });
+  // 开发模式下 打开调试控制台
   if (isDev.default) {
     win.webContents.openDevTools();
   }
@@ -116,12 +126,17 @@ function startBackendService() {
   console.log("Trying to start backend service.")
   let backendProcess;
   // 开发环境启动脚本服务
-  if(isDev.default){
+  try{
+    if(isDev.default){
       backendProcess = spawn('python', ['start.py'], { cwd: path.join(__dirname, '../../../') });
-  }else{
-    // 启动后端服务
-      backendProcess =  spawn(path.join(__dirname, 'Backend.exe'));
+    }else{
+      // 启动后端服务
+        backendProcess =  spawn(path.join(__dirname, '../../Backend.exe'));
+    }
+  }catch (e){
+    console.log('Backend error found...'+ e);
   }
+
 
   backendProcess.stdout.on('data', (data) => {
     console.log(`stdout: ${data}`);

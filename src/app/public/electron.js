@@ -1,5 +1,5 @@
 // public/electron.js
-const { exec } = require('child_process');
+const { spawn } = require('child_process');
 
 const { app, BrowserWindow, ipcMain, session } = require('electron');
 const path = require('path');
@@ -10,9 +10,9 @@ let pythonServerPid;
 let win;
 let interval;
 let timeout;
+let isDev;
 
 async function createWindow() {
-  const isDev = await import('electron-is-dev');
   win = new BrowserWindow({
     width: 800,
     height: 600,
@@ -114,14 +114,27 @@ function startBackendService() {
     treeKill(pythonServerPid);
   }
   console.log("Trying to start backend service.")
-  return exec('python ./../../start.py', (error, stdout, stderr) => {
-    if (error) {
-      console.error(`exec error: ${error}`);
-      return;
-    }
-    console.log(`stdout: ${stdout}`);
-    console.error(`stderr: ${stderr}`);
+  let backendProcess;
+  // 开发环境启动脚本服务
+  if(isDev.default){
+      backendProcess = spawn('python', ['start.py'], { cwd: path.join(__dirname, '../../../') });
+  }else{
+    // 启动后端服务
+      backendProcess =  spawn(path.join(__dirname, 'Backend.exe'));
+  }
+
+  backendProcess.stdout.on('data', (data) => {
+    console.log(`stdout: ${data}`);
   });
+
+  backendProcess.stderr.on('data', (data) => {
+    console.error(`stderr: ${data}`);
+  });
+
+  backendProcess.on('close', (code) => {
+    console.log(`backend process exited with code ${code}`);
+  });
+  return backendProcess;
 }
 
 // 收到前端消息, 继续启动后端服务
@@ -135,7 +148,8 @@ ipcMain.on('retry-backend', () => {
 });
 
 // Ready Actions Call
-app.whenReady().then(() => {
+app.whenReady().then(async () => {
+  isDev = await import('electron-is-dev');
   // 启动Python服务器
   console.log("Trying to start backend service.")
   pythonServer = startBackendService();
@@ -153,12 +167,12 @@ app.whenReady().then(() => {
 
   // 处理权限请求
   session.defaultSession.setPermissionRequestHandler((webContents, permission, callback) => {
-      console.log("Permission request handler: " + permission)
-      if (['clipboard-read', 'media', 'audioCapture', 'videoCapture'].includes(permission)) {
-          callback(true);
-      } else {
-          callback(true);
-      }
+    console.log("Permission request handler: " + permission)
+    if (['clipboard-read', 'media', 'audioCapture', 'videoCapture'].includes(permission)) {
+      callback(true);
+    } else {
+      callback(true);
+    }
   });
   // 启动后端检查
   startBackendCheck();

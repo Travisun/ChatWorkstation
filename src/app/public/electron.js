@@ -185,10 +185,10 @@ app.whenReady().then(async () => {
   // 处理权限请求
   session.defaultSession.setPermissionRequestHandler((webContents, permission, callback) => {
     console.log("Permission request handler: " + permission)
-    if (['clipboard-read', 'media', 'audioCapture', 'videoCapture'].includes(permission)) {
+    if (['clipboard-read', 'media', 'audioCapture', 'videoCapture', 'screen-wake-lock'].includes(permission)) {
       callback(true);
     } else {
-      callback(true);
+      callback(false);
     }
   });
   // 启动后端检查

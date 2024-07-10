@@ -5,6 +5,7 @@ import sys
 import uvicorn
 from importlib.util import find_spec
 
+from dotenv import load_dotenv
 
 # 脚本主目录
 base_script_path = os.path.dirname(os.path.abspath(__file__))
@@ -29,9 +30,22 @@ def ensure_uvicorn_installed():
         pip.main(['install', 'uvicorn'])
         print("uvicorn installed successfully.")
 
+def load_env_setting():
+    # 获取当前脚本所在的目录
+    current_directory = os.path.dirname(os.path.abspath(__file__))
+
+    # 拼接 .env 文件的路径
+    env_path = os.path.join(current_directory, '.env')
+
+    # 加载 .env 文件中的参数到环境变量
+    load_dotenv(dotenv_path=env_path)
+    # 现在你可以访问 .env 文件中的环境变量了
+
 def main():
     script_dir = os.path.dirname(os.path.abspath(__file__))
     os.chdir(script_dir)
+
+    print(f"Check .env file setting: {os.environ.get("OLLAMA_BASE_URL", "error loading .env")}")
 
     key_file = '.webui_secret_key'
     port = int(os.getenv('PORT', '8080'))
@@ -59,7 +73,11 @@ def main():
 
 if __name__ == '__main__':
     try:
+        # Loading .env
+        load_env_setting()
+        # Check uvicorn
         ensure_uvicorn_installed()
+        # Running main
         main()
     except ModuleNotFoundError as err:
         print("Need module to be installed:", err)

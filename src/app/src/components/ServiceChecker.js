@@ -1,13 +1,14 @@
 // src/components/BootloaderComponent.js
-import React, {useEffect, useState, useTransition} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Text, Flex, Callout, Button} from "@radix-ui/themes";
 import LogoLoadingComponent from "./LogoLoadingComponent";
 import {InfoCircledIcon} from "@radix-ui/react-icons";
 
+import { useTranslation } from 'react-i18next';
 
 
 const ServiceCheckerComponent = ({ src, title}) => {
-  const {t} = useTransition();
+  const { t } = useTranslation();
   const [backendStarted, setBackendStarted] = useState(false);
   const [backendFailed, setBackendFailed] = useState(false);
   const [backendTrying, setBackendTrying] = useState(false);
@@ -55,7 +56,7 @@ const ServiceCheckerComponent = ({ src, title}) => {
                         <LogoLoadingComponent />
                     </span>
                 </div>
-              {backendFailed && <div>
+              {!backendFailed && <div>
                 <Callout.Root color="gray">
                   <Callout.Icon>
                     <InfoCircledIcon />

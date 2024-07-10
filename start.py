@@ -1,10 +1,7 @@
-import asyncio
 import os
 import random
-import signal
 import sys
 
-import keyboard
 import uvicorn
 from importlib.util import find_spec
 
@@ -106,29 +103,9 @@ def main():
     uvicorn.run(app, host=host, port=port, forwarded_allow_ips='*')
 
 
-# 命令行提供退出选项
-def ask_exit():
-    """Prompt the user to confirm exit when Ctrl+S is detected."""
-    print("\nReceived Ctrl+S.")
-    while True:
-        user_input = input("Do you really want to exit? (y/n): ").strip().lower()
-        if user_input in ['y', 'yes']:
-            print("Exiting program...")
-            asyncio.get_event_loop().stop()
-            break
-        elif user_input in ['n', 'no']:
-            print("Continuing program...")
-            break
-        else:
-            print("Please enter 'y' or 'n'.")
-
-
 if __name__ == '__main__':
     # Set up signal handling
     try:
-        # 设置 Ctrl+S 检测
-        keyboard.add_hotkey('ctrl+s', ask_exit)
-
         # Loading .env
         load_env_setting()
         # Correct proxy setting protocols
@@ -141,11 +118,5 @@ if __name__ == '__main__':
         print("Need module to be installed:", err)
     except KeyboardInterrupt:
         print("Program interrupted")
-
-        # 等待用户输入
-    print("Press Ctrl+C to exit the program")
-    try:
-        while True:
-            asyncio.sleep(1)
-    except KeyboardInterrupt:
-        print("Exiting program...")
+    except BaseException as e:
+        print(f"Backend Service Errors: {e}")

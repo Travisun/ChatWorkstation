@@ -7,6 +7,8 @@ import ServiceChecker from "./ServiceChecker";
 const BootloaderComponent = ({ src, title}) => {
 
   const [backendStarted, setBackendStarted] = useState(false);
+  // 记录Iframe状态是否加载完成
+  const [frameReady, setFrameReady] = useState(false);
 
   // 尝试获取屏幕唤醒权限
   const requestWakeLock = async () => {
@@ -30,19 +32,19 @@ const BootloaderComponent = ({ src, title}) => {
 
   return (
       <>
-        {backendStarted ? (
-            <div onClick={() => requestWakeLock}>
-              <iframe
-                  src={src}
-                  title={title}
-                  width="100%"
-                  height="100vh"
-                  style={{border: 'none', display: 'block', height: 'calc(100vh - 55px)'}}
-                  allow="geolocation; microphone; camera; media, clipboard-read; clipboard-write; encrypted-media; screen-wake-lock;" // 添加所有必要的权限
-              />
-            </div>) : (
-            <ServiceChecker />
-        )}
+        {backendStarted && <div onClick={() => requestWakeLock}>
+          <iframe
+              src={src}
+              title={title}
+              width="100%"
+              height="100vh"
+              onLoad={() => setFrameReady(true)}
+              style={{border: 'none', display: frameReady ? 'block' : 'none', height: 'calc(100vh - 55px)'}}
+              allow="geolocation; microphone; camera; media, clipboard-read; clipboard-write; encrypted-media; screen-wake-lock;" // 添加所有必要的权限
+          />
+        </div>}
+        {/* 服务加载器 */}
+        {(!frameReady || !backendStarted) && <ServiceChecker/>}
       </>
   );
 };

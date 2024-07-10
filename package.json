@@ -11,7 +11,7 @@
     "backend:build": "cross-env VIRTUAL_ENV=.venv && %VIRTUAL_ENV%\\Scripts\\pyinstaller start.spec && %VIRTUAL_ENV%\\Scripts\\python .\\build_tools\\file_copy.py .\\.env .\\dist\\ChatWorkstation\\",
     "backend:test": "cross-env VIRTUAL_ENV=.venv && %VIRTUAL_ENV%\\Scripts\\python start.py",
     "backend:run": "cross-env-shell dist/ChatWorkstation/Backend.exe",
-    "backend:addtional-files-comsile": "cross-env VIRTUAL_ENV=.venv && %VIRTUAL_ENV%\\Scripts\\python build_tools\\files_compile_copy.py .\\third_party\\open_webui\\backend\\apps\\webui\\internal .\\dist\\ChatWorkstation\\_internal\\apps\\webui\\internal\\",
+    "backend:addtional-files-comsile": "cross-env VIRTUAL_ENV=.venv && CPOYSCRIPT=%VIRTUAL_ENV%\\Scripts\\python build_tools\\files_compile_copy.py && %CPOYSCRIPT% .\\third_party\\open_webui\\backend\\apps\\webui\\internal .\\dist\\ChatWorkstation\\_internal\\apps\\webui\\internal\\ && %CPOYSCRIPT% .\\third_party\\open_webui\\backend\\static\\fonts .\\dist\\ChatWorkstation\\_internal\\static\\fonts",
     "pyodide:fetch": "cd third_party/open_webui && node scripts/prepare-pyodide.js",
     "backend:compilelibs": "cross-env VIRTUAL_ENV=.venv && %VIRTUAL_ENV%\\Scripts\\python build_tools/lib_compiler.py && %VIRTUAL_ENV%\\Scripts\\python build_tools/lib_copy.py"
   },

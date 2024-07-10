@@ -1,5 +1,5 @@
 // src/components/BootloaderComponent.js
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useTransition} from 'react';
 import {Text, Flex, Callout, Button} from "@radix-ui/themes";
 import LogoLoadingComponent from "./LogoLoadingComponent";
 import {InfoCircledIcon} from "@radix-ui/react-icons";
@@ -7,7 +7,7 @@ import {InfoCircledIcon} from "@radix-ui/react-icons";
 
 
 const ServiceCheckerComponent = ({ src, title}) => {
-
+  const {t} = useTransition();
   const [backendStarted, setBackendStarted] = useState(false);
   const [backendFailed, setBackendFailed] = useState(false);
   const [backendTrying, setBackendTrying] = useState(false);
@@ -62,9 +62,9 @@ const ServiceCheckerComponent = ({ src, title}) => {
                   </Callout.Icon>
                   <Callout.Text>
                     <Flex as="span" align="center" gap="4">
-                      <Text>哎呀，Chat Workstation 服务启动失败。</Text>
+                      <Text>{t('backend_failed')}</Text>
                       <Button loading={backendTrying} onClick={retryBackend} variant="surface" size="1" my="-2">
-                        立即重试
+                        {t('start_backend')}
                       </Button>
                     </Flex>
                   </Callout.Text>

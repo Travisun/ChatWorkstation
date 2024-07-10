@@ -15,7 +15,24 @@ i18n
       escapeValue: false, // React已经做了防注入处理
     },
     backend: {
-      loadPath: 'locales/{{lng}}/{{ns}}.json', // 语言文件路径
+      loadPath: (languages, namespaces) => {
+        const primaryLng = languages[0];
+        // 定义备用路径数组
+        const alternativeLngs = [primaryLng.split('-')[0]];
+        const paths = [
+          `locales/${primaryLng}/${namespaces[0]}.json`,
+          ...alternativeLngs.map(altLng => `locales/${altLng}/${namespaces[0]}.json`)
+        ];
+        return paths;
+      },
+    },
+    detection: {
+      // 语言检测器的配置
+      order: ['navigator', 'htmlTag', 'path', 'subdomain'],
+      lookupQuerystring: 'lng',
+      lookupCookie: 'i18next',
+      lookupLocalStorage: 'i18nextLng',
+      caches: ['localStorage', 'cookie'],
     },
   });
 

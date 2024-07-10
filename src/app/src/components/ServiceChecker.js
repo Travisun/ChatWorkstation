@@ -13,6 +13,13 @@ const ServiceCheckerComponent = ({ src, title}) => {
   const [backendFailed, setBackendFailed] = useState(false);
   const [backendTrying, setBackendTrying] = useState(false);
 
+    const retryBackend = () => {
+        window.electron.retryBackend();
+        setBackendFailed(false);
+        console.log("Retrying start backend.");
+        setBackendTrying(true);
+      };
+    
   useEffect(() => {
     window.electron.onBackendStarted(() => {
       setBackendStarted(true);
@@ -25,14 +32,11 @@ const ServiceCheckerComponent = ({ src, title}) => {
       setBackendFailed(true);
       setBackendTrying(false);
     });
-  }, []);
 
-  const retryBackend = () => {
-    window.electron.retryBackend();
-    setBackendFailed(false);
-    console.log("Retrying start backend.");
-    setBackendTrying(true);
-  };
+    // 组件挂载后启动后端服务
+    retryBackend();
+
+  }, []);
 
   return (
       <Flex

@@ -164,15 +164,17 @@ ipcMain.on('retry-backend', () => {
 
 // Ready Actions Call
 app.whenReady().then(async () => {
+
   isDev = await import('electron-is-dev');
   // 启动Python服务器
   console.log("Trying to start backend service.")
-  pythonServer = startBackendService();
+  // pythonServer = startBackendService();
+  //
+  // // 获取Python服务器进程的PID
+  // pythonServerPid = pythonServer.pid;
 
-  // 获取Python服务器进程的PID
-  pythonServerPid = pythonServer.pid;
-
-  createWindow();
+  // 先创建窗口，避免堵塞卡画面
+  await createWindow();
 
   app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) {
@@ -190,8 +192,10 @@ app.whenReady().then(async () => {
     }
   });
   // 启动后端检查
-  startBackendCheck();
+  // startBackendCheck();
 });
+
+
 
 app.on('will-quit', () => {
   // 终止Python服务器进程

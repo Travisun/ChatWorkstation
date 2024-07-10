@@ -29,7 +29,8 @@ exe = EXE(
     strip=False,
     upx=True,
     console=True,
-    icon='src/app/src/static/applogo-180.ico'  # 添加此行来设置图标
+    icon='src/app/src/static/applogo-180.ico',  # 添加此行来设置图标
+    version='version.txt'
 )
 coll = COLLECT(
     exe,

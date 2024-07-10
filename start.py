@@ -41,6 +41,37 @@ def load_env_setting():
     load_dotenv(dotenv_path=env_path)
     # 现在你可以访问 .env 文件中的环境变量了
 
+
+# 修复不规范的代理软件带来的错误
+def ensure_proxy_protocol():
+    # 常见的代理环境变量
+    proxy_env_vars = [
+        "http_proxy",
+        "https_proxy",
+        "ftp_proxy",
+        "socks_proxy",
+        "no_proxy",
+        "HTTP_PROXY",
+        "HTTPS_PROXY",
+        "FTP_PROXY",
+        "SOCKS_PROXY",
+        "NO_PROXY"
+    ]
+
+    for var in proxy_env_vars:
+        value = os.environ.get(var)
+        if value:
+            # 检查代理地址是否以 'http://' 或 'https://' 开头
+            if not (value.startswith('http://') or value.startswith('https://')):
+                # 如果代理地址不包含协议，则添加 'http://' 作为默认协议
+                new_value = 'http://' + value
+                os.environ[var] = new_value
+                print(f"Updated {var} to {new_value}")
+            else:
+                print(f"{var} is already set correctly: {value}")
+        else:
+            print(f"{var} is not set")
+
 def main():
     script_dir = os.path.dirname(os.path.abspath(__file__))
     os.chdir(script_dir)
@@ -75,6 +106,8 @@ if __name__ == '__main__':
     try:
         # Loading .env
         load_env_setting()
+        # Correct proxy setting protocols
+        ensure_proxy_protocol()
         # Check uvicorn
         ensure_uvicorn_installed()
         # Running main

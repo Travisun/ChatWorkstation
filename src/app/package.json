@@ -4,12 +4,14 @@
   "private": true,
   "main": "public/electron.js",
   "build": {
+    "productName": "ChatWorkstation",
     "appId": "com.chatworkstation.app",
     "mac": {
       "category": "your.app.category.type"
     },
     "win": {
       "target": "nsis",
+      "icon": "src/static/applogo-180.ico",
       "artifactName": "${productName}-Setup-${version}.${ext}"
     },
     "linux": {

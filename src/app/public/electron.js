@@ -173,6 +173,23 @@ app.whenReady().then(async () => {
   // // 获取Python服务器进程的PID
   // pythonServerPid = pythonServer.pid;
 
+  // 注册私有协议处理逻辑
+  protocol.registerFileProtocol('chatws', (request, callback) => {
+    const parsedUrl = url.parse(request.url, true);
+    console.log('Protocol URL:', parsedUrl);
+
+    // Extract parameters from the URL
+    const params = parsedUrl.query;
+    console.log('Parameters:', params);
+
+    // Pass parameters to the renderer process or handle them in the main process
+    win.webContents.on('did-finish-load', () => {
+      win.webContents.send('protocol-params', {...params, actionUrl: parsedUrl});
+    });
+    // 此处应该根据不同的 parseUrl 执行对应操作
+    callback({ path: `file://${path.join(__dirname, '../build/index.html')}`});
+  });
+
   // 先创建窗口，避免堵塞卡画面
   await createWindow();
 
@@ -210,3 +227,19 @@ app.on('window-all-closed', () => {
   }
 });
 
+// Listen for URL protocol activation (macOS)
+app.on('open-url', (event, url) => {
+  const parsedUrl = new URL(url);
+  const params = parsedUrl.searchParams;
+  const paramsObject = {};
+  params.forEach((value, key) => {
+    paramsObject[key] = value;
+  });
+  console.log('Parameters:', paramsObject);
+
+  if (mainWindow) {
+    win.webContents.on('did-finish-load', () => {
+      win.webContents.send('protocol-params', {...paramsObject, actionUrl: parsedUrl});
+    });
+  }
+});

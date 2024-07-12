@@ -1,0 +1,6 @@
+[submodule "third_party/open-webui"]
+	path = third_party/open-webui
+	url = https://github.com/Travisun/open-webui.git
+[submodule "third_party/open_webui"]
+	path = third_party/open_webui
+	url = https://github.com/Travisun/open-webui.git

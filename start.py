@@ -1,6 +1,7 @@
 import os
 import random
 import sys
+import traceback
 
 import uvicorn
 from importlib.util import find_spec
@@ -120,3 +121,10 @@ if __name__ == '__main__':
         print("Program interrupted")
     except BaseException as e:
         print(f"Backend Service Errors: {e}")
+        # 捕获异常并打印详细的错误信息
+        print("An error occurred:")
+        traceback.print_exc()
+        print("\nDetailed error information:")
+        print("Exception type:", type(e))
+        print("Exception message:", e)
+        print("Traceback details:", traceback.format_exc())

@@ -10,7 +10,7 @@ In this digital age, AI chat experiences have become an integral part of our dai
 
 **Chat Workstation** is built on Open WebUI, inheriting its outstanding user experience. We have encapsulated it using Electron technology, aiming to provide a native client for Windows, Linux, and Mac platforms. Once installed, you can enjoy a smooth and hassle-free chat experience with a single click.
 
-<iframe src="https://player.vimeo.com/video/989480789" width="640" height="360" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+![Introduction of Chat Workstation CLient Application](introduction.gif)
 
 ### Key Features
 

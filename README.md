@@ -11,7 +11,7 @@
 **Chat Workstation** 基于 Open WebUI，承袭了其出色的用户体验。我们通过 Electron 技术将其封装，旨在提供 Windows、Linux 和 Mac 平台的原生客户端。安装完成后，只需一键启动，您便可享受到流畅、便捷的聊天体验。
 
 
-<iframe src="https://player.vimeo.com/video/989480789" width="640" height="360" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+![开源AI聊天客户端 Chat Workstation CLient Application](introduction.gif)
 
 ### 功能亮点
 

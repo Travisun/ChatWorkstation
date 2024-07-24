@@ -18,3 +18,5 @@ src/app/.yarn
 src/app/.yarn/*
 .yarn/
 .yarn/*
+.DS_Store
+./mac_requirements.txt

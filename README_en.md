@@ -43,14 +43,16 @@ We are grateful for any form of support. If you are financially able, please con
 
 Together, let’s strive for advancements in AI chat technology!
 
+<p>
 Alipay QR
 
-![Alipay 支付宝捐助](https://evzs.com/images/8b0ece3f155c71a1bec03b61699d89f.jpg)
+<img src="https://evzs.com/images/8b0ece3f155c71a1bec03b61699d89f.jpg" alt="Alipay 支付宝捐助" height="180px" style="display:inline-block; vertical-align: middle;" />
+
 
 WechatPay QR
 
-![WechatPay 微信支付捐助](https://evzs.com/images/8fecd7b36dad4eb55b516b113f778a1.jpg)
-
+<img src="https://evzs.com/images/8fecd7b36dad4eb55b516b113f778a1.jpg" alt="WechatPay 微信支付捐助" height="180px" style="display:inline-block; vertical-align: middle;" />
+</p>
 
 ---
 

@@ -36,6 +36,9 @@ async function createWindow() {
       : `file://${path.join(__dirname, '../build/index.html')}`
   );
 
+  // 处理自定义协议
+  app.setAsDefaultProtocolClient('chatws');
+
   // 监听键盘事件 打开开发者控制台
   const { globalShortcut } = require('electron');
 
@@ -131,7 +134,7 @@ function startBackendService() {
       backendProcess = spawn('python', ['start.py'], { cwd: path.join(__dirname, '../../../') });
     }else{
       // 启动后端服务
-        backendProcess =  spawn(path.join(__dirname, '../../Backend.exe'));
+        backendProcess =  spawn(path.join(__dirname, '../../Backend'));
     }
   }catch (e){
     console.log('Backend error found...'+ e);
@@ -174,21 +177,21 @@ app.whenReady().then(async () => {
   // pythonServerPid = pythonServer.pid;
 
   // 注册私有协议处理逻辑
-  protocol.registerFileProtocol('chatws', (request, callback) => {
-    const parsedUrl = url.parse(request.url, true);
-    console.log('Protocol URL:', parsedUrl);
-
-    // Extract parameters from the URL
-    const params = parsedUrl.query;
-    console.log('Parameters:', params);
-
-    // Pass parameters to the renderer process or handle them in the main process
-    win.webContents.on('did-finish-load', () => {
-      win.webContents.send('protocol-params', {...params, actionUrl: parsedUrl});
-    });
-    // 此处应该根据不同的 parseUrl 执行对应操作
-    callback({ path: `file://${path.join(__dirname, '../build/index.html')}`});
-  });
+  // protocol.registerFileProtocol('chatws', (request, callback) => {
+  //   const parsedUrl = url.parse(request.url, true);
+  //   console.log('Protocol URL:', parsedUrl);
+  //
+  //   // Extract parameters from the URL
+  //   const params = parsedUrl.query;
+  //   console.log('Parameters:', params);
+  //
+  //   // Pass parameters to the renderer process or handle them in the main process
+  //   win.webContents.on('did-finish-load', () => {
+  //     win.webContents.send('protocol-params', {...params, actionUrl: parsedUrl});
+  //   });
+  //   // 此处应该根据不同的 parseUrl 执行对应操作
+  //   callback({ path: `file://${path.join(__dirname, '../build/index.html')}`});
+  // });
 
   // 先创建窗口，避免堵塞卡画面
   await createWindow();
@@ -211,8 +214,6 @@ app.whenReady().then(async () => {
   // 启动后端检查
   // startBackendCheck();
 });
-
-
 
 app.on('will-quit', () => {
   // 终止Python服务器进程
@@ -237,7 +238,7 @@ app.on('open-url', (event, url) => {
   });
   console.log('Parameters:', paramsObject);
 
-  if (mainWindow) {
+  if (win) {
     win.webContents.on('did-finish-load', () => {
       win.webContents.send('protocol-params', {...paramsObject, actionUrl: parsedUrl});
     });

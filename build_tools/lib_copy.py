@@ -1,7 +1,15 @@
+import logging
 import os
 import shutil
 import py_compile
 
+
+def setup_logging():
+    logging.basicConfig(level=logging.INFO)
+    logger = logging.getLogger(__name__)
+    return logger
+
+logger  = setup_logging()
 
 def find_file(filename, search_paths, max_depth=5):
     for path in search_paths:
@@ -14,13 +22,16 @@ def find_file(filename, search_paths, max_depth=5):
 
 
 def process_file(file_path, dest_folder):
-    if file_path.endswith('.py'):
-        compiled_file = py_compile.compile(file_path, cfile=file_path + 'c')
-        dest_path = os.path.join(dest_folder, os.path.basename(compiled_file))
-        shutil.copy2(compiled_file, dest_path)
-    else:
-        dest_path = os.path.join(dest_folder, os.path.basename(file_path))
-        shutil.copy2(file_path, dest_path)
+    try:
+        if file_path.endswith('.py'):
+            compiled_file = py_compile.compile(file_path, cfile=file_path + 'c')
+            dest_path = os.path.join(dest_folder, os.path.basename(compiled_file))
+            shutil.copy2(compiled_file, dest_path)
+        else:
+            dest_path = os.path.join(dest_folder, os.path.basename(file_path))
+            shutil.copy2(file_path, dest_path)
+    except Exception:
+        logger.info(f"File Error: {file_path}")
 
 
 def process_folder(folder_path, dest_folder):

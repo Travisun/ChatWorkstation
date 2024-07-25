@@ -1,4 +1,5 @@
 import os
+import platform
 import site
 import sys
 import compileall
@@ -54,7 +55,7 @@ def copy_non_py_files(src_dir, dest_dir, logger):
                 if not os.path.exists(dest_file_dir):
                     os.makedirs(dest_file_dir)
                 shutil.copy2(src_file_path, dest_file_path)
-                logger.info(f"{Fore.GREEN}Copied non-Python file: {src_file_path} -> {dest_file_path}")
+                # logger.info(f"{Fore.GREEN}Copied non-Python file: {src_file_path} -> {dest_file_path}")
 
 def custom_compile_dir(dir_path, base_dir, output_dir, logger):
     for root, _, files in os.walk(dir_path):
@@ -73,7 +74,7 @@ def custom_compile_dir(dir_path, base_dir, output_dir, logger):
                 if not os.path.exists(dest_dir):
                     os.makedirs(dest_dir)
                 shutil.copy2(src_file_path, dest_file_path)
-                logger.info(f"{Fore.GREEN}Copied non-Python file: {src_file_path} -> {dest_file_path}")
+                # logger.info(f"{Fore.GREEN}Copied non-Python file: {src_file_path} -> {dest_file_path}")
 
 
 def remove_middle_path(path):
@@ -143,6 +144,21 @@ def compile_module(module_name, output_dir, logger):
         except Exception as e:
             logger.warning(f"{Fore.YELLOW}Error importing module: {submodule_full_name}. Skipping... {e}")
 
+
+def move_files_and_folders(src_dir, dest_dir):
+    for item in os.listdir(src_dir):
+        src_path = os.path.join(src_dir, item)
+        dest_path = os.path.join(dest_dir, item)
+        if os.path.isdir(src_path):
+            shutil.move(src_path, dest_path)
+        else:
+            shutil.move(src_path, dest_path)
+
+    # Remove the empty source directory
+    if not os.listdir(src_dir):
+        os.rmdir(src_dir)
+
+
 if __name__ == "__main__":
     # if len(sys.argv) != 3:
     #     print(f"{Fore.RED}Usage: python compile_script.py <module_names_comma_separated> <output_dir>")
@@ -162,5 +178,18 @@ if __name__ == "__main__":
         module_name = module_name.strip()
         logger.info(f"{Fore.BLUE}Compiling module: {module_name}")
         compile_module(module_name, output_dir, logger)
+
+    if platform.system() == 'Darwin':
+        src_dir = os.path.join(output_dir, "lib")
+        dest_dir = output_dir
+        output_dir = src_dir
+        # Check if source directory exists
+        if os.path.exists(src_dir):
+            move_files_and_folders(src_dir, dest_dir)
+            print("Mac系统下的依赖文件和文件夹已成功移动到正确目录，空目录已删除。")
+        else:
+            print(f"源目录 {src_dir} 不存在。")
+    else:
+        print("当前操作系统不是 macOS。")
 
     print(f"{Fore.GREEN}Compiled files are saved to {output_dir}")

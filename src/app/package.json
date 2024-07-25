@@ -14,7 +14,7 @@
     },
     "mac": {
       "category": "public.app-category.utilities",
-      "icon": "src/static/appicon.icns",
+      "icon": "src/static/icon.icns",
       "protocols": [
         {
           "name": "Chat Workstation Protocol",

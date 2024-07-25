@@ -77,7 +77,7 @@ def main():
     script_dir = os.path.dirname(os.path.abspath(__file__))
     os.chdir(script_dir)
 
-    print(f"Check .env file setting: {os.environ.get("OLLAMA_BASE_URL", "error loading .env")}")
+    print(f"Check .env file setting: {os.environ.get('OLLAMA_BASE_URL', 'error loading .env')}")
 
     key_file = '.webui_secret_key'
     port = int(os.getenv('PORT', '8080'))

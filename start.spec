@@ -43,6 +43,6 @@ coll = COLLECT(
     name='ChatWorkstation',
     workpath='dist',  # 修改为临时工作目录
     console=True,
-    upx_dir='build_tools/upx'  # Windows 上 UPX 可执行文件的路径
-    # upx_dir='/usr/local/bin/upx'  # Unix 系统上 UPX 可执行文件的路径
+    # upx_dir='build_tools/upx'  # Windows 上 UPX 可执行文件的路径
+    upx_dir='/usr/local/bin/upx'  # Unix 系统上 UPX 可执行文件的路径
 )

@@ -14,11 +14,11 @@ let isDev;
 
 async function createWindow() {
   win = new BrowserWindow({
-    width: 800,
-    height: 600,
-    minWidth: 470,
-    minHeight: 760,
-    title: "ChatWorkstation",  // 这里设置窗口标题
+    width: 900,
+    height: 650,
+    minWidth: 450,
+    minHeight: 650,
+    title: "Chat Workstation",  // 这里设置窗口标题
     webPreferences: {
       nodeIntegration: false,
       preload: path.join(__dirname, 'preload.js'),

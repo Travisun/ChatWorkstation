@@ -1,3 +1,4 @@
+import logging
 import os
 import random
 import sys
@@ -49,29 +50,25 @@ def ensure_proxy_protocol():
     proxy_env_vars = [
         "http_proxy",
         "https_proxy",
-        "ftp_proxy",
-        "socks_proxy",
-        "no_proxy",
         "HTTP_PROXY",
-        "HTTPS_PROXY",
-        "FTP_PROXY",
-        "SOCKS_PROXY",
-        "NO_PROXY"
+        "HTTPS_PROXY"
     ]
 
-    for var in proxy_env_vars:
-        value = os.environ.get(var)
-        if value:
-            # 检查代理地址是否以 'http://' 或 'https://' 开头
-            if not (value.startswith('http://') or value.startswith('https://')):
-                # 如果代理地址不包含协议，则添加 'http://' 作为默认协议
-                new_value = 'http://' + value
-                os.environ[var] = new_value
-                print(f"Updated {var} to {new_value}")
-            else:
-                print(f"{var} is already set correctly: {value}")
+    http_proxy_enabled = os.getenv('HTTP_PROXY_ENABLED', 'false').lower()
+    http_proxy_url = os.getenv('HTTP_PROXY_URL', '')
+
+    if http_proxy_enabled == 'true':
+        if not http_proxy_url:
+            logging.info('HTTP_PROXY_ENABLED=true but HTTP_PROXY_URL is not set, will use system proxy settings.')
+            return
         else:
-            print(f"{var} is not set")
+            os.environ.update((var, http_proxy_url) for var in proxy_env_vars)
+            logging.info("Set all proxy variables to {}".format(http_proxy_url))
+    elif http_proxy_enabled == 'false':
+        for var in proxy_env_vars:
+            os.environ.pop("NO_PROXY", True)
+            os.environ.pop(var, None)
+        logging.info("Cleared all proxy variables")
 
 def main():
     script_dir = os.path.dirname(os.path.abspath(__file__))

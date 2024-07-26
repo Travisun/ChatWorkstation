@@ -18,7 +18,9 @@
       "protocols": [
         {
           "name": "Chat Workstation Protocol",
-          "schemes": ["chatws"]
+          "schemes": [
+            "chatws"
+          ]
         }
       ]
     },
@@ -103,7 +105,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "electron-dev": "concurrently \"yarn start\" \"wait-on http://localhost:3000 && electron .\"",
+    "electron-dev": "concurrently \"npm run start\" \"wait-on http://localhost:3000 && electron .\"",
     "electron-pack": "react-scripts build && electron-builder"
   },
   "eslintConfig": {

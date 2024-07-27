@@ -21,6 +21,12 @@
   -webkit-app-region: drag !important; // Enable window dragging
 }
 
+.updateMewButton{
+  webkitAppRegion: no-drag !important;
+  -webkit-app-region: no-drag !important; // Disable window dragging on buttons
+  border-radius: 0 !important;
+}
+
 .header-button {
   //background-color: transparent;
   border: none;
@@ -41,7 +47,13 @@
   margin-top: -22px;
 }
 
+
 .header-button:hover, .header-button:focus, .header-button:active{
+  .update{
+    background-color: orangered !important;
+    font-size: small;
+    display: flex;
+  }
   svg{
     fill: #323236 !important;
     color: #323236 !important;

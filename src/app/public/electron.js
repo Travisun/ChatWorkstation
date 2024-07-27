@@ -1,7 +1,8 @@
 // public/electron.js
+
 const { spawn } = require('child_process');
 
-const { app, BrowserWindow, ipcMain, session } = require('electron');
+const { app, BrowserWindow, ipcMain, session, shell } = require('electron');
 const path = require('path');
 const treeKill = require('tree-kill');
 
@@ -213,6 +214,12 @@ app.whenReady().then(async () => {
   });
   // 启动后端检查
   // startBackendCheck();
+
+  // 监听来自渲染进程的事件
+  ipcMain.on('open-external-link', (event, url) => {
+    shell.openExternal(url);
+  });
+
 });
 
 app.on('will-quit', () => {

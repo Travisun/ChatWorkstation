@@ -1,10 +1,10 @@
 // public/electron.js
-
 const { spawn } = require('child_process');
-
+const remote = require('@electron/remote/main');
 const { app, BrowserWindow, ipcMain, session, shell } = require('electron');
 const path = require('path');
 const treeKill = require('tree-kill');
+const os = require('os');
 
 let pythonServer;
 let pythonServerPid;
@@ -24,13 +24,14 @@ async function createWindow() {
       nodeIntegration: false,
       preload: path.join(__dirname, 'preload.js'),
       contextIsolation: true,
-      enableRemoteModule: false,
+      enableRemoteModule: false, // Disable the remote module
+      sandbox: true, // Enable sandboxing for security
       // 允许访问媒体设备
       media: true,
     },
     frame: false,
   });
-
+  remote.initialize();
   win.loadURL(
     isDev.default
       ? 'http://localhost:3000'
@@ -76,6 +77,19 @@ async function createWindow() {
   ipcMain.on('close-window', () => {
     console.log("Get Command for Close Window")
     win.close();
+  });
+
+  // 监听渲染进程的请求并返回 JSON 数据
+  ipcMain.handle('get-system-info', async () => {
+    // 模拟获取系统信息
+    const systemInfo = {
+      system: process.platform,
+      version: process.version,
+      architecture: process.arch,
+      language: process.env.LANG || 'en_US'
+    };
+
+    return systemInfo; // 返回 JSON 数据
   });
 
   // 监听窗口关闭事件

@@ -43,6 +43,8 @@ def load_env_setting():
     load_dotenv(dotenv_path=env_path)
     # 现在你可以访问 .env 文件中的环境变量了
 
+# 检查并生成系统信息
+
 
 # 修复不规范的代理软件带来的错误
 def ensure_proxy_protocol():

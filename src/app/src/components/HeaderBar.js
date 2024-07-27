@@ -7,6 +7,8 @@ import {
   ExitFullScreenIcon, GearIcon
 } from '@radix-ui/react-icons';
 import {Box, Button, Flex, IconButton, Inset, Dialog, Spinner} from "@radix-ui/themes";
+import axios from 'axios';
+import ReactMarkdown from 'react-markdown';
 
 import "./HeaderBar.scss"
 import "../static/logo_text.svg"
@@ -17,9 +19,12 @@ const HeaderBar = () => {
   const [isMaximized, setIsMaximized] = useState(false);
 
   const chat_workstation_client_version = 1100;
-  const update_check_link = "https://chatworkstation.org/update_check?version=" + chat_workstation_client_version
   const [updatePageLink, setUpdatePageLink] = useState("https://chatworkstation.org/update_instruction?version="+ chat_workstation_client_version);
-  const [needUpdate, setNeedUpdate] = useState(true);
+  const [needUpdate, setNeedUpdate] = useState(false);
+  const [updateInfo, setUpdateInfo] = useState({
+    title: null,
+    description: null,
+  });
 
   // 使用系统浏览器打开外部链接
   const open_extranel_link = (link) => {
@@ -27,8 +32,26 @@ const HeaderBar = () => {
     console.log(link);
     window.electron.ipcRenderer.send('open-external-link', link);
   }
+  // 检查远端版本更新状态
+  const checkForUpdates = async () => {
+    const dataToSend = { "system": window.osInfo, "client_version": chat_workstation_client_version }; // The data about client version check to send
+    try {
+      const response = await axios.post('https://api.chatworkstation.org/check_update', dataToSend);
+      const res = response.data;
+      setNeedUpdate(res?.needUpdate);
+      if (res?.updatePageLink){
+        setUpdatePageLink(res.updatePageLink);
+      }
+      // 解析标题和介绍信息
+      setUpdateInfo(res?.updateInfo);
+    } catch (err) {
+      console.error('Client Update Check Error!', err);
+    }
+  };
 
   useEffect(() => {
+    // 渲染第一次检查更新
+    checkForUpdates();
     const handleMaximize = () => setIsMaximized(true);
     const handleUnmaximize = () => setIsMaximized(false);
 
@@ -58,21 +81,16 @@ const HeaderBar = () => {
       <Flex justify={"start"} className="header-brand"><span style={{height: '30px', width:'138px', marginTop: '8px'}} ><LogoHeaderComponent /></span></Flex>
       <Box position={"right"} className="action-box">
         <Flex className="header-actions" align={"end"} justify={"end"}>
-          {needUpdate && <Spinner />}
+          {!needUpdate && <Spinner />}
           {needUpdate && <Dialog.Root>
             <Dialog.Trigger>
               <Button color="orange" className="updateMewButton" variant="soft">Update</Button>
             </Dialog.Trigger>
             <Dialog.Content>
-              <Dialog.Title>New updates available</Dialog.Title>
+              <Dialog.Title>{updateInfo.title}</Dialog.Title>
               <Dialog.Description>
-                We have updated Chat Workstation to version v1.2.19, which is now available for updating.
+                <ReactMarkdown>{updateInfo.description}</ReactMarkdown>
               </Dialog.Description>
-
-              <Inset side="x" my="5">
-
-              </Inset>
-
               <Flex gap="3" justify="end">
                 <Button variant="soft" color="primary" onClick={()=> open_extranel_link(updatePageLink)}>
                    <GearIcon /> Update Chat Workstation Now

@@ -1,8 +1,11 @@
 // public/preload.js
 const { contextBridge, ipcRenderer, clipboard} = require('electron');
+const os = require('os');
 
 // 暴露给前端界面的 API
 contextBridge.exposeInMainWorld('electron', {
+  // 暴露操作系统信息，便于版本检测
+  osInfo: {platform: os.platform(), release: os.release() , arch: os.arch(), lang:  os.locale ? os.locale() : process.env.LANG || process.env.LANGUAGE || process.env.LC_ALL || 'en-US'},
   onBackendStarted: (callback) => ipcRenderer.on('backend-started', callback),
   onBackendFailed: (callback) => ipcRenderer.on('backend-failed', callback),
   retryBackend: () => ipcRenderer.send('retry-backend'),

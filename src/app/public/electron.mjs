@@ -1,18 +1,9 @@
 // public/electron.js
 import axios  from "axios";
-// const axios = require('axios');
-import spawn from "child_process";
-// const { spawn } = require('child_process');
-
-// const remote = require('@electron/remote/main');
-import  { app, BrowserWindow, ipcMain, session, shell } from 'electron';
-
-// const path = require('path');
+import {spawn} from "child_process";
+import  { app, BrowserWindow, ipcMain, session, shell, globalShortcut } from 'electron';
 import path from 'path';
-
 import treeKill  from "tree-kill";
-// const treeKill = require('tree-kill');
-// const os = require('os');
 import os from 'os';
 import Store from 'electron-store';
 import { fileURLToPath } from 'url';
@@ -133,9 +124,6 @@ async function createWindow() {
 
   // 处理自定义协议
   app.setAsDefaultProtocolClient('chatws');
-
-  // 监听键盘事件 打开开发者控制台
-  const { globalShortcut } = require('electron');
 
   globalShortcut.register('Shift+Tab+F2', () => {
     if (win) {

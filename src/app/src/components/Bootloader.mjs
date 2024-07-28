@@ -1,6 +1,6 @@
 // src/components/BootloaderComponent.js
 import React, {useEffect, useState} from 'react';
-import ServiceChecker from "./ServiceChecker";
+import ServiceChecker from "./ServiceChecker.mjs";
 
 
 

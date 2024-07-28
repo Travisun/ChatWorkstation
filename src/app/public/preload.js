@@ -1,12 +1,12 @@
 // public/preload.js
-const { contextBridge, ipcRenderer, clipboard} = require('electron');
+const { contextBridge, ipcRenderer, clipboard } = require('electron');
 
 // 暴露给前端界面的 API
 contextBridge.exposeInMainWorld('electron', {
   getUpdateRemind: () => ipcRenderer.invoke('get-update-remind'),
   remindUpdateLater: () => ipcRenderer.invoke('remind-update-later'),
-  getConfig: (name)=> ipcRenderer.invoke('get-config', name),
-  setConfig: (settings)=>ipcRenderer.invoke('set-config', settings),
+  getConfig: (name) => ipcRenderer.invoke('get-config', name),
+  setConfig: (settings) => ipcRenderer.invoke('set-config', settings),
   // 暴露操作系统信息，便于版本检测
   getSystemInfo: () => ipcRenderer.invoke('get-system-info'),
   onBackendStarted: (callback) => ipcRenderer.on('backend-started', callback),
@@ -28,4 +28,3 @@ contextBridge.exposeInMainWorld('electron', {
     },
   },
 });
-

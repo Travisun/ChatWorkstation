@@ -1,7 +1,7 @@
 // src/components/BootloaderComponent.js
 import React, {useEffect, useState} from 'react';
 import {Text, Flex, Callout, Button} from "@radix-ui/themes";
-import LogoLoadingComponent from "./LogoLoadingComponent";
+import LogoLoadingComponent from "./LogoLoadingComponent.mjs";
 import {InfoCircledIcon} from "@radix-ui/react-icons";
 
 import { useTranslation } from 'react-i18next';
@@ -19,7 +19,7 @@ const ServiceCheckerComponent = ({ src, title}) => {
         console.log("Retrying start backend.");
         setBackendTrying(true);
       };
-    
+
   useEffect(() => {
     window.electron.onBackendStarted(() => {
       setBackendStarted(true);

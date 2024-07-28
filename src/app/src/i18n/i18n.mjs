@@ -1,5 +1,5 @@
 import i18n from 'i18next';
-import {initReactI18next} from 'react-i18next';
+import { initReactI18next } from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 import Backend from 'i18next-http-backend';
 
@@ -18,13 +18,8 @@ i18n
       loadPath: (languages, namespaces) => {
         const primaryLng = languages[0];
         // 检查语言是否为中文，否则则采用默认语言
-        if(primaryLng === "zh-CN" || primaryLng === "zh"){
-            let lang = "zh-CN"
-        }else{
-            // 默认语言，目前还未找到具体Electron差异发生在哪里
-            let lang = 'en';
-        }
-          return `locales/${primaryLng}/${namespaces[0]}.json`;
+        const lang = (primaryLng === "zh-CN" || primaryLng === "zh") ? "zh-CN" : 'en';
+        return `locales/${lang}/${namespaces[0]}.json`;
       },
     },
     detection: {

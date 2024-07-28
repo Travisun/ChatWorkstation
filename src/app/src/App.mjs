@@ -1,6 +1,6 @@
 import './App.css';
-import BootloaderComponent from "./components/Bootloader";
-import HeaderBar from "./components/HeaderBar";
+import BootloaderComponent from "./components/Bootloader.mjs";
+import HeaderBar from "./components/HeaderBar.mjs";
 
 function App() {
   return (
@@ -8,7 +8,7 @@ function App() {
         <HeaderBar />
         <BootloaderComponent
             src={"http://localhost:8080"}
-            title="ChatWorkstation"
+            title="Chat Workstation"
         />
     </div>
   );

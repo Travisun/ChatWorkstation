@@ -1,4 +1,6 @@
 {
   "backend_failed": "Backend Service Failed, Please try it again or check your installation.",
-  "start_backend": "Restart Now"
+  "start_backend": "Restart Now",
+  "menu_about": "About Chat Workstation AI",
+  "menu_github": "Github Project Page"
 }

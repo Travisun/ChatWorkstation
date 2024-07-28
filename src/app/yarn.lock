@@ -6365,6 +6365,7 @@ __metadata:
     customize-cra: ^1.0.0
     electron: ^31.3.0
     electron-builder: ^24.13.3
+    electron-i18n: ^1.3136.0
     electron-is-dev: ^3.0.1
     electron-store: ^10.0.0
     i18next: ^23.11.5
@@ -7764,6 +7765,13 @@ __metadata:
     electron-builder: cli.js
     install-app-deps: install-app-deps.js
   checksum: 8d7943d990363e547f1fbe391fee6b94d5e35e78c355645399f1f9b6709b6c167f0781abf8926c984c8a92475e6647f863f5e6a6938101a8a3a18ca85559810b
+  languageName: node
+  linkType: hard
+
+"electron-i18n@npm:^1.3136.0":
+  version: 1.3136.0
+  resolution: "electron-i18n@npm:1.3136.0"
+  checksum: 9b6f26119cdb7788ce331c43acc9d2728e7c1ad1311a1375f2fcd29747d1407bf8410d4568478bde8db1be81f695e1f1b7766d8ef15e8b9f35c385aa036b3255
   languageName: node
   linkType: hard
 

@@ -1,6 +1,8 @@
 {
   "backend_failed": "抱歉，Chat Workstation 服务启动失败。",
-  "start_backend": "立即重启"
+  "start_backend": "立即重启",
+  "menu_about": "关于 Chat Workstation AI",
+  "menu_github": "Github 项目主页"
 }
 
 

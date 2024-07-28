@@ -1,12 +1,14 @@
 // public/electron.js
 import axios from "axios";
 import {spawn} from "child_process";
-import {app, BrowserWindow, globalShortcut, ipcMain, session, shell} from 'electron';
+import {app, BrowserWindow, globalShortcut, ipcMain, session, shell, Menu} from 'electron';
 import path from 'path';
 import treeKill from "tree-kill";
 import os from 'os';
 import Store from 'electron-store';
 import {fileURLToPath} from 'url';
+import i18next from 'i18next';
+
 
 // 获取 __dirname 的替代方法
 const __filename = fileURLToPath(import.meta.url);
@@ -55,6 +57,7 @@ axios.post(chat_workstation_server+'/device/check_updates', {}, {
 })
 
 
+
 /**
  * RemindUpdateLater 设置一个延期更新的时间戳为当前时间 + 7 天
  */
@@ -100,6 +103,17 @@ let win;
 let interval;
 let timeout;
 let isDev;
+// setup i18n translation
+const language = app.getLocale();
+i18next.init({
+  lng: language,
+  fallbackLng: 'en',
+  ns: ['translation'],
+  defaultNS: 'translation',
+  backend: {
+    loadPath: path.join(__dirname, 'locales/{{lng}}/{{ns}}.json'),
+  }
+});
 
 async function createWindow() {
   win = new BrowserWindow({
@@ -211,6 +225,27 @@ async function createWindow() {
     }
     win = null;
   });
+
+  // add Menu for Apple MacOS and Linux Client
+  let menu = Menu.buildFromTemplate([
+    {
+      label: i18next.t('menu_about'),
+      click: () => {
+        shell.openExternal("https://chatworkstation.org?source=cwsapp");
+      }
+    },
+    {
+      label: i18next.t('menu_github'),
+      click: () => {
+        shell.openExternal("https://github.com/Travisun/ChatWorkstation?source=Chat_Workstation_AI");
+      }
+    }
+  ]);
+  if (process.platform === 'darwin' || process.platform === 'linux') {
+    Menu.setApplicationMenu(menu);
+  } else {
+    Menu.setApplicationMenu(null);
+  }
 }
 
 

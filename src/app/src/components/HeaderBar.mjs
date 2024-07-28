@@ -2,7 +2,6 @@
 import React, {useEffect, useState} from 'react';
 import {Cross2Icon, EnterFullScreenIcon, ExitFullScreenIcon, GearIcon, MinusIcon} from '@radix-ui/react-icons';
 import {Box, Button, Dialog, Flex, IconButton} from "@radix-ui/themes";
-import ReactMarkdown from 'react-markdown';
 
 import "./HeaderBar.scss"
 import "../static/logo_text.svg"
@@ -72,7 +71,7 @@ const HeaderBar = () => {
             <Dialog.Content>
               <Dialog.Title>{configSettings.update_title}</Dialog.Title>
               <Dialog.Description>
-                <ReactMarkdown>{configSettings.update_description}</ReactMarkdown>
+                <>{configSettings.update_description}</>
               </Dialog.Description>
               <Flex gap="3" justify="end">
                 <Button variant="soft" color="primary" onClick={()=> {open_extranel_link(configSettings.update_link)}}>

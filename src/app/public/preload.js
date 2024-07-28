@@ -3,6 +3,12 @@ const { contextBridge, ipcRenderer, clipboard } = require('electron');
 
 // 暴露给前端界面的 API
 contextBridge.exposeInMainWorld('electron', {
+  getAllConfig: (callback) => {
+    ipcRenderer.send('get-all-config');
+    ipcRenderer.once('get-all-config-response', (event, data) => {
+      callback(data);
+    });
+  },
   getUpdateRemind: () => ipcRenderer.invoke('get-update-remind'),
   remindUpdateLater: () => ipcRenderer.invoke('remind-update-later'),
   getConfig: (name) => ipcRenderer.invoke('get-config', name),

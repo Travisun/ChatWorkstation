@@ -1,37 +1,40 @@
 // public/electron.js
-import axios  from "axios";
+import axios from "axios";
 import {spawn} from "child_process";
-import  { app, BrowserWindow, ipcMain, session, shell, globalShortcut } from 'electron';
+import {app, BrowserWindow, globalShortcut, ipcMain, session, shell} from 'electron';
 import path from 'path';
-import treeKill  from "tree-kill";
+import treeKill from "tree-kill";
 import os from 'os';
 import Store from 'electron-store';
-import { fileURLToPath } from 'url';
+import {fileURLToPath} from 'url';
 
 // 获取 __dirname 的替代方法
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const store = new Store({
-  name: 'chat-workstation-config-store',
+  name: 'cws-config',
   cwd: path.join(__dirname, '../../') // 自定义存储路径
 });
 
 // Chat Workstation 更新服务器
-const chat_workstation_server = 'http://localhost:8000/api';
+const chat_workstation_server = 'https://api.chatworkstation/api';
 // 当前客户端版本
-const version = 1100;
+const version = "1100";
 if(store.get('version') !== version){ store.set('version', version); }
 // 注册客户端获取用作更新和API访问的Token
-if(store.get('device_token') == null){
-  axios.post(chat_workstation_server+'/register', {
+if(store.get('device_token') === undefined){
+  axios.post(chat_workstation_server+'/device/register', {
     client_version: version,
     platform: os.platform(),
     os_version: os.version(),
     arch: os.arch(),
     language: os.locale ? os.locale() : process.env.LANG || process.env.LANGUAGE || process.env.LC_ALL || 'en-US'
   }).then((response)=>{
+    console.log('device_token >>>>>', response.data.token)
     store.set('device_token', response.data.token);
+  }).catch((reason)=>{
+    console.log("errpr>>>>>>", reason)
   })
 }
 // 检查系统更新
@@ -141,6 +144,12 @@ async function createWindow() {
 
   win.on('unmaximize', () => {
     win.webContents.send('window-unmaximized');
+  });
+
+  // 前端获取所有设置
+  ipcMain.on('get-all-config', (event) => {
+    const allConfig = store.get(); // retrieve the config data
+    event.reply('get-all-config-response', allConfig);
   });
 
   ipcMain.on('minimize-window', () => {

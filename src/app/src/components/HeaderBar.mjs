@@ -11,14 +11,9 @@ import LogoHeaderComponent from "./LogoHeader.mjs";
 
 const HeaderBar = () => {
   const [isMaximized, setIsMaximized] = useState(false);
-
-  const [token, setToken] = useState(null);
-  const [updatePageLink, setUpdatePageLink] = useState("https://chatworkstation.org/?update_check");
+  const [configSettings, setConfigSettings] = useState({});
   const [needUpdate, setNeedUpdate] = useState(false);
-  const [updateInfo, setUpdateInfo] = useState({
-    title: null,
-    description: null,
-  });
+
   // const system_lang = os.locale ? os.locale() : process.env.LANG || process.env.LANGUAGE || process.env.LC_ALL || 'en-US'
   // 使用系统浏览器打开外部链接
   const open_extranel_link = (link) => {
@@ -27,14 +22,19 @@ const HeaderBar = () => {
     window.electron.ipcRenderer.send('open-external-link', link);
   }
 
+  const remindMeLater = () => {
+    // waiting for implementation
+  }
+
   useEffect(() => {
     // 同步更新设置
-    setNeedUpdate(window.electron.getUpdateRemind())
-    setUpdateInfo({
-      title: window.electron.getConfig('update_title'),
-      description: window.electron.getConfig('update_description')
+    window.electron.getUpdateRemind().then((res)=>{
+      setNeedUpdate(res)
     })
-    setUpdatePageLink(window.electron.getConfig('update_link'));
+
+    window.electron.getAllConfig((data) => {
+      setConfigSettings(data);
+    });
 
     const handleMaximize = () => setIsMaximized(true);
     const handleUnmaximize = () => setIsMaximized(false);
@@ -70,17 +70,17 @@ const HeaderBar = () => {
               <Button color="orange" className="updateMewButton" variant="soft">Update</Button>
             </Dialog.Trigger>
             <Dialog.Content>
-              <Dialog.Title>{updateInfo.title}</Dialog.Title>
+              <Dialog.Title>{configSettings.update_title}</Dialog.Title>
               <Dialog.Description>
-                <ReactMarkdown>{updateInfo.description}</ReactMarkdown>
+                <ReactMarkdown>{configSettings.update_description}</ReactMarkdown>
               </Dialog.Description>
               <Flex gap="3" justify="end">
-                <Button variant="soft" color="primary" onClick={()=> open_extranel_link(updatePageLink)}>
-                   <GearIcon /> Update Chat Workstation Now
+                <Button variant="soft" color="primary" onClick={()=> {open_extranel_link(configSettings.update_link)}}>
+                   <GearIcon /> Update Now
                 </Button>
                 <Dialog.Close>
-                  <Button variant="soft" color="gray" onClick={()=> window.electron.remindUpdateLater()}>
-                    Not Now
+                  <Button variant="soft" color="gray" onClick={()=>{remindMeLater()}}>
+                    Later
                   </Button>
                 </Dialog.Close>
               </Flex>

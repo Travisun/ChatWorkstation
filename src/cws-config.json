@@ -1,3 +1,9 @@
 {
-	"version": "1100"
+	"version": "1100",
+	"device_token": "ac3a3a1c5718729c50b9305e1763a4bda2a8b48675f4fd8419b39d74eeeddcef",
+	"update_version": "1101",
+	"update_link": "https://www.chatworkstation.org/?check_update_windows",
+	"update_title": "New Version Released",
+	"update_description": "我们已经发布了新版本的客户端，特别建议你立即更新.",
+	"update_checked_at": "2024-07-28T14:28:50.919Z"
 }

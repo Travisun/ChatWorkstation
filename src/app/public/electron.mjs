@@ -8,6 +8,7 @@ import os from 'os';
 import Store from 'electron-store';
 import {fileURLToPath} from 'url';
 import i18next from 'i18next';
+import * as electron from "electron";
 
 
 // 获取 __dirname 的替代方法
@@ -19,10 +20,13 @@ const store = new Store({
   cwd: path.join(__dirname, '../../') // 自定义存储路径
 });
 
-// Chat Workstation 更新服务器
-const chat_workstation_server = 'https://api.chatworkstation/api';
 // 当前客户端版本
 const version = "1100";
+// 定义 userAgent
+axios.defaults.headers.common['User-Agent'] = 'ChatWorkstationAI/'+version+';Electron/'+app.getVersion();
+// Chat Workstation 更新服务器
+const chat_workstation_server = 'https://api.chatworkstation.org/api';
+
 if(store.get('version') !== version){ store.set('version', version); }
 // 注册客户端获取用作更新和API访问的Token
 if(store.get('device_token') === undefined){

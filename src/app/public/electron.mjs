@@ -1,10 +1,104 @@
 // public/electron.js
-const { spawn } = require('child_process');
-const remote = require('@electron/remote/main');
-const { app, BrowserWindow, ipcMain, session, shell } = require('electron');
-const path = require('path');
-const treeKill = require('tree-kill');
-const os = require('os');
+import axios  from "axios";
+// const axios = require('axios');
+import spawn from "child_process";
+// const { spawn } = require('child_process');
+
+// const remote = require('@electron/remote/main');
+import  { app, BrowserWindow, ipcMain, session, shell } from 'electron';
+
+// const path = require('path');
+import path from 'path';
+
+import treeKill  from "tree-kill";
+// const treeKill = require('tree-kill');
+// const os = require('os');
+import os from 'os';
+import Store from 'electron-store';
+import { fileURLToPath } from 'url';
+
+// 获取 __dirname 的替代方法
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const store = new Store({
+  name: 'chat-workstation-config-store',
+  cwd: path.join(__dirname, '../../') // 自定义存储路径
+});
+
+// Chat Workstation 更新服务器
+const chat_workstation_server = 'http://localhost:8000/api';
+// 当前客户端版本
+const version = 1100;
+if(store.get('version') !== version){ store.set('version', version); }
+// 注册客户端获取用作更新和API访问的Token
+if(store.get('device_token') == null){
+  axios.post(chat_workstation_server+'/register', {
+    client_version: version,
+    platform: os.platform(),
+    os_version: os.version(),
+    arch: os.arch(),
+    language: os.locale ? os.locale() : process.env.LANG || process.env.LANGUAGE || process.env.LC_ALL || 'en-US'
+  }).then((response)=>{
+    store.set('device_token', response.data.token);
+  })
+}
+// 检查系统更新
+axios.post(chat_workstation_server+'/device/check_updates', {}, {
+    headers: {
+      Authorization: store.get('device_token')
+    }
+  }).then((response)=>{
+      if (response.data.version > version) {
+        console.log('New version available');
+        store.set('update_version', response.data.version);
+        store.set('update_link', response.data.link);
+        store.set('update_title', response.data.title);
+        store.set('update_description', response.data.description);
+        store.set('update_checked_at', new Date());
+    }
+      console.log(response);
+})
+
+
+/**
+ * RemindUpdateLater 设置一个延期更新的时间戳为当前时间 + 7 天
+ */
+function RemindUpdateLater() {
+    const currentTime = Date.now(); // 当前时间戳（毫秒）
+    const sevenDaysLater = currentTime + (7 * 24 * 60 * 60 * 1000); // 当前时间 + 7 天
+    store.set('update_remind_after', sevenDaysLater); // 保存时间戳
+}
+
+/**
+ * GetUpdateRemind 检查用户是否应该被提醒更新
+ * @returns {boolean} 如果应该提醒则返回 true，否则返回 false
+ */
+function GetUpdateRemind() {
+    const updateRemindAfter = store.get('update_remind_after');
+    const updateVersion = store.get('update_version');
+
+    // 如果没有新版本或者无需更新时返回 false
+    if(!updateVersion || updateRemindAfter <= updateRemindAfter){
+      return false;
+    }
+
+    // 当 store 中没有保存 update_remind_after 时，返回 true
+    if (updateRemindAfter === undefined) {
+        return true;
+    }
+
+    const currentTime = Date.now();
+
+    // 当存在 update_remind_after，且该时间戳早于当前时间，返回 true
+    if (updateRemindAfter < currentTime) {
+        return true;
+    }
+
+    // 其他情况返回 false
+    return false;
+}
+
 
 let pythonServer;
 let pythonServerPid;
@@ -31,7 +125,6 @@ async function createWindow() {
     },
     frame: false,
   });
-  remote.initialize();
   win.loadURL(
     isDev.default
       ? 'http://localhost:3000'
@@ -79,11 +172,32 @@ async function createWindow() {
     win.close();
   });
 
+  // 获取 store 的 update_remind_after
+  ipcMain.handle('get-update-remind', () => {
+      return GetUpdateRemind();
+  });
+
+  // 设置 store 的 update_remind_after
+  ipcMain.handle('remind-update-later', () => {
+      return RemindUpdateLater()
+  });
+  // 获取系统设置
+  ipcMain.handle('get-config', (event, name)=>{
+    return store.get(name);
+  })
+  // 设置系统信息
+  ipcMain.handle('set-config', (event, settings = []) => {
+    settings.map((value, name)=>{
+      store.set(name, value);
+    })
+    return true;
+  })
+
   // 监听渲染进程的请求并返回 JSON 数据
   ipcMain.handle('get-system-info', async () => {
     // 模拟获取系统信息
     const systemInfo = {
-      system: process.platform,
+      platform: process.platform,
       version: process.version,
       architecture: process.arch,
       language: process.env.LANG || 'en_US'

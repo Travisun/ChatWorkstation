@@ -1,10 +1,11 @@
 {
-  "name": "ChatWorkstation",
+  "name": "chat_workstation",
   "description": "Your free AI model connection client.",
   "author": "Travis Tang <chatworkstation@gmail.com>",
   "version": "1.1.0",
   "private": true,
-  "main": "public/electron.js",
+  "main": "public/electron.mjs",
+  "type": "module",
   "homepage": "./",
   "build": {
     "productName": "ChatWorkstation",
@@ -93,6 +94,7 @@
     "axios": "^1.7.2",
     "concurrently": "^8.2.2",
     "electron-is-dev": "^3.0.1",
+    "electron-store": "^10.0.0",
     "i18next": "^23.11.5",
     "i18next-browser-languagedetector": "^8.0.0",
     "i18next-http-backend": "^2.5.2",

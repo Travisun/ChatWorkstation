@@ -12,9 +12,9 @@ import LogoHeaderComponent from "./LogoHeader";
 
 const HeaderBar = () => {
   const [isMaximized, setIsMaximized] = useState(false);
-  // const os = window.electron.os;
-  const chat_workstation_client_version = 1100;
-  const [updatePageLink, setUpdatePageLink] = useState("https://chatworkstation.org/update_instruction?version="+ chat_workstation_client_version);
+
+  const [token, setToken] = useState(null);
+  const [updatePageLink, setUpdatePageLink] = useState("https://chatworkstation.org/?update_check");
   const [needUpdate, setNeedUpdate] = useState(false);
   const [updateInfo, setUpdateInfo] = useState({
     title: null,
@@ -27,30 +27,16 @@ const HeaderBar = () => {
     console.log(link);
     window.electron.ipcRenderer.send('open-external-link', link);
   }
-  // 检查远端版本更新状态
-  const checkForUpdates = async () => {
-    const systemInfo = await window.electron.getSystemInfo();
-    const tokenRequest = await axios.get('http://127.0.0.1:8000/auth/token');
-    const dataToSend = { "_token": tokenRequest.data.token, "system": systemInfo, "client_version": chat_workstation_client_version }; // The data about client version check to send
-    try {
-      const response = await axios.post('http://127.0.0.1:8000/client/check_update', dataToSend);
-      return response.data;
-    } catch (err) {
-      console.error('Client Update Check Error!', err);
-    }
-  };
 
   useEffect(() => {
-    // 检查更新系统更新
-    checkForUpdates().then((res)=>{
-      console.log("Check Update Result: ", res)
-      setNeedUpdate(res?.needUpdate);
-      if (res?.updatePageLink){
-        setUpdatePageLink(res.updatePageLink);
-      }
-      // 解析标题和介绍信息
-      setUpdateInfo(res?.updateInfo);
-    });
+    // 同步更新设置
+    setNeedUpdate(window.electron.getUpdateRemind())
+    setUpdateInfo({
+      title: window.electron.getConfig('update_title'),
+      description: window.electron.getConfig('update_description')
+    })
+    setUpdatePageLink(window.electron.getConfig('update_link'));
+
     const handleMaximize = () => setIsMaximized(true);
     const handleUnmaximize = () => setIsMaximized(false);
 
@@ -94,7 +80,7 @@ const HeaderBar = () => {
                    <GearIcon /> Update Chat Workstation Now
                 </Button>
                 <Dialog.Close>
-                  <Button variant="soft" color="gray">
+                  <Button variant="soft" color="gray" onClick={()=> window.electron.remindUpdateLater()}>
                     Not Now
                   </Button>
                 </Dialog.Close>

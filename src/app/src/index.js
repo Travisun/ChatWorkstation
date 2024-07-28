@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import App from './App.js';
+import reportWebVitals from './reportWebVitals.js';
 import {Theme} from "@radix-ui/themes";
 import '@radix-ui/themes/styles.css';
-import i18n from "./i18n/i18n";
+import i18n from "./i18n/i18n.js";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
